@@ -1,5 +1,4 @@
 const ToDoListItem = require('../Models/doItemModel');
-const User = require('../Models/userModel');
 
 //first, adding in a list item
 
