@@ -39,7 +39,7 @@ let getAllListItems = (req, res) => {
 //third, updating a list item
 
 let updateListItem = (req, res) => {
-    ToDoListItem.updateOne({_id: req.body._id}, {
+    ToDoListItem.updateOne({title: req.body.title}, {
         username: req.body.username,
         title: req.body.title,
         description: req.body.description,
