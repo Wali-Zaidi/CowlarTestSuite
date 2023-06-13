@@ -10,3 +10,4 @@ router.delete('/list', doItemController.deleteListItem);
 
 //AGAIN, IMPORT THE DAMN THINGS CORRECTLY
 
+module.exports = router;

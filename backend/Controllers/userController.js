@@ -91,4 +91,4 @@ let deleteUser = (req, res) => { //this is for the user to delete their own prof
     });
 }
 
-module.exports = { addUser, editUser, deleteUser };
+module.exports = { signup, login, addUser, editUser, deleteUser };
