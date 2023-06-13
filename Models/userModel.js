@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        min: 4,
+        min: 4, //since my own name is only 4, so make a habit of min 4
         max: 30
     },
     password: {
@@ -18,5 +18,7 @@ const userSchema = new mongoose.Schema({
         required: true,
     }
 });
+
+//username mostly for frontend display purposes
 
 module.exports = mongoose.model('ListUsers', userSchema);
