@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 const toDoListSchema = new mongoose.Schema({
+    username : {
+        type: String,
+        required: true,
+        min: 4,
+        max: 30
+    }, 
     title: {
         type: String,
         required: true
