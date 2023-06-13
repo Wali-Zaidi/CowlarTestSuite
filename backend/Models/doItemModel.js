@@ -16,11 +16,12 @@ const toDoListSchema = new mongoose.Schema({
         enum: ['active', 'inactive'] //just to make sure that the status is either active or inactive
     },
     completedTime: {
-        type: Date,
+        type: String,
+         //this will automatically set the time to the current time
     },
     createdTime: {
-        type: Date,
-        default: Date.now, //this will automatically set the time to the current time
+        type: String,
+         //this will automatically set the time to the current time
         required: true
     }
 });
