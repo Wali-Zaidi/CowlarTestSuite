@@ -24,6 +24,20 @@ describe('Testing the functionality of the user model', () => {
         expect(savedUser.email).toBe(user1.email);
     });
 
+    test("Failure Test for adding a new user", async() => {
+        const user1 = new user( { 
+            username: "testuser2",
+            password: "testpassword1",
+            email: "testuseremail1"
+        });
+
+        const savedUser = await user1.save();
+
+        expect(savedUser.username).not.toBe("testuser1");
+        expect(savedUser.password).not.toBe("testpassword");
+        expect(savedUser.email).not.toBe("testuseremail");
+    });
+
     test("Test for editing a user", async() => {
         const originalUser = {
             username: "testuser2"
@@ -47,10 +61,35 @@ describe('Testing the functionality of the user model', () => {
         expect(user1.email).toBe(updatedUser.email);
     });
 
+    // test("Failure Test for editing a user", async() => {
+    //     //test will fail because the original user is not the same as the updated user
+    //     const originalUser = { 
+    //         username: "user2" //using this as the original user to check to see if we can update an already accessed resource
+    //     }
+
+    //     const updatedUser = {
+    //         username: "user3",
+    //         password: "password1",
+    //         email: "email1"
+    //     }
+
+    //     const user1 = await user.findOneAndUpdate({username: originalUser.username}, { 
+    //         username: updatedUser.username,
+    //         password: updatedUser.password,
+    //         email: updatedUser.email
+    //     }, {new: true});
+
+    //     expect(user1.username).toBeNull();
+    //     expect(user1.password).toBeNull();
+    //     expect(user1.email).not.toBeNull(); 
+    // });
+
+
     test("Test for deleting a user", async() => { 
         const user1 = await user.findOneAndDelete({username: "testuser2"});
 
-        expect(user1).toBeNull(); //since this one got replaced, then it should show up as null
+        expect(user1).not.toBeNull(); //since this one got find one and delete, it should show up as the record before the deletion
     });
+
 
 })
