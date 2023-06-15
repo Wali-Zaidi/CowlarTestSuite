@@ -25,7 +25,7 @@ let addListItem = (req, res) => {
 //second, getting all the list items for the current user
 
 let getAllListItems = (req, res) => {
-    ToDoListItem.find({username: req.body.username}).then((items) => {
+    ToDoListItem.find({username: req.body.username, completedTime: req.body.completedTime}).then((items) => {
         res.status(200).json({message: "Items retrieved successfully", items: items})
         console.log("Items retrieved successfully");
     }).catch((err) => {

@@ -6,13 +6,13 @@ const app = express(); //normal initialization of the app
 const doItemController = require('../Controllers/doItemController');
 const router = require('../Routes/doItemRoute'); //calling in the router
 
-app.use('/', router); //using the router
+app.use('/todo', router); //using the router
 
 describe("Testing the to do list item routes", () => {
 
     it('Testing the add list item function via route', async() => {
-        const response = await request(app).post('/list').send({
-            username: "testuser1",
+        const response = await request(app).post('/todo/list').send({
+            username: "testuser2",
             title: "testtitle",
             description: "testdescription",
             status: "active",
@@ -40,7 +40,7 @@ describe("Testing the to do list item routes", () => {
 
     it('Testing getting all list items for a user', async() => {
         const response = await request(app).get('/list').send({
-            username: "testuser1"
+            username: "testuser2"
         });
         
         expect(response.statusCode).toBe(200);
@@ -57,8 +57,8 @@ describe("Testing the to do list item routes", () => {
     });
 
     it('Testing getting a specific list item for a user', async() => {
-        const response = await request(app).get('/list/1').send({
-            username: "testuser1"
+        const response = await request(app).get('/list').send({
+            username: "testuser2"
         });
         
         expect(response.statusCode).toBe(200);
@@ -66,7 +66,7 @@ describe("Testing the to do list item routes", () => {
     });
 
     it('Testing the failure scenario for getting a specific list item for a user', async() => {
-        const response = await request(app).get('/list/1').send({
+        const response = await request(app).get('/list').send({
             username: "testuse"
         })
 

@@ -1,5 +1,8 @@
+
+/* --------GENERAL CSS ----------- */
+
 .alert {
-    background-color: #784e0a;
+    background-color: #587c75;
     color: #ffffff;
     padding: 10px;
     border: 1px solid #f5c6cb;
@@ -26,6 +29,44 @@
     align-items: center;
 }
 
+button {
+    background-color: #587c75;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    opacity: 100%;
+    background-blend-mode: normal;
+    /* adding gradienet to the button */
+    background-image: linear-gradient(to top, #587c75, #72a097);
+}
+
+button:hover {
+    background-color: #72a097;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    opacity: 100%;
+    background-blend-mode: normal;
+    /* adding gradienet to the button */
+    background-image: linear-gradient(to top, #72a097, #587c75);
+}
+
+header {
+    width: 0%;
+    height: 0%;
+    background-color: #3fa0cd;
+    color: #ffffff;
+    margin: 0px ;
+}
+
+/* --------- LANDING PAGE CSS -------------- */
+
 #loginForm {
     background-color: #fcfcfcaf;
     width: 60%;
@@ -41,21 +82,101 @@
     margin: 0px;
 }
 
-#loginForm #submit {
-    background-color: #3fa0cd;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
+#loginForm input {
     width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
     margin-top: 10px;
-    opacity: 100%;
 }
 
-header {
-    width: 0%;
-    height: 0%;
-    background-color: #3fa0cd;
+#loginForm label {
+    font-size: small;
+}
+
+#submitDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#submitDiv input {
+    width: 40%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #587c75;
+    background-color: #587c75;
+    opacity: 1;
     color: #ffffff;
-    margin: 0px ;
+    margin-top: 10px;
+}
+
+/* ---------- TO DO CSS ----------------- */
+
+
+#containerDiv {
+    width: 30%;
+    height: 30%;
+    border-radius: 10px;
+    padding: 50px;
+    /* display: flex; */
+    justify-content: center;
+}
+
+/* took this code from stackOverflow, for getting the date button to show only the calender icon */
+#dateSelectionDiv input[type="date"]::-webkit-inner-spin-button,
+#dateSelectionDiv input[type="date"]::-webkit-calendar-picker-indicator {
+    margin:0;
+    opacity: 80%;
+    background-color: transparent;
+    justify-self: center;
+}
+#dateSelectionDiv input[type="date"]::-webkit-datetime-edit {
+    display:none;
+}
+
+#dateSelectionDiv input {
+    width: 9%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    text-align: center;
+    justify-self: start;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+#dateSelectionDiv button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+#dateSelectionDiv {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 40px;
+    justify-content: space-between;
+    /* background-color: #ffffff; */
+    padding: 10px;
+    box-shadow: #000000 0px 0px 10px 0px;
+    align-items: center;
+    opacity: 70%;
+    border-radius: 5px;
+    font-size: small;
+}
+
+#dateSelectionLabelDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    opacity: 100%;
 }
