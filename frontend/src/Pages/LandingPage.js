@@ -38,6 +38,7 @@ function LandingPage() {
                 console.log(response.data);   
                 sessionStorage.setItem('token', response.data.token);
                 showAlert(response.data.message)  
+                window.location.href = '/list';
             }
             catch (err) {
                 console.log(err);
@@ -71,14 +72,13 @@ function LandingPage() {
         document.getElementById('mainDiv').appendChild(alertElement);
         setTimeout(function() {
             alertElement.remove();
-        }, 3000);
+        }, 4000);
     }
 
 
     return( //mostly a rough draft, styling will come later on 
         <div id='mainDiv'>
             <div id='loginDiv'>
-                <h1> Welcome </h1>
                 <div id='loginForm'>
                     <form onSubmit={handleSubmit}>
                         <div id='usernameDiv'>
@@ -94,7 +94,7 @@ function LandingPage() {
                             <input type='email' id='email' name='email' value={user.email} onChange={handleChange} required/>
                         </div>
                         <div id='submitDiv'>
-                            <input type='submit' id='submit' name='submit' value='Login' onClick={handleSubmit}/>
+                            <input type='button' id='submit' name='submit' value='Login' onClick={handleSubmit}/>
                             <input type='submit' id='submit' name='submit' value='Register' onClick={handleSubmit}/>
                         </div>
                     </form>
