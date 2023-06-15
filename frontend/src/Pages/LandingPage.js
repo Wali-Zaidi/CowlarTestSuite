@@ -1,6 +1,6 @@
 import React from 'react';
 import axois from 'axios';
-import {portCall, token} from '../Components/config';
+import {portCall} from '../Components/config';
 import '../CSS/LandingPage.css';
 
 function LandingPage() {
@@ -38,9 +38,8 @@ function LandingPage() {
                 console.log(response.data);   
                 // sessionStorage.setItem('token', response.data.token);
                 // console.log(sessionStorage.getItem('token'));
-                token = response.data.token;
-                console.log(token);
-                showAlert(response.data.message)  
+                showAlert(response.data.message)
+                sessionStorage.setItem('username', user.username);
                 window.location.href = '/list';
             }
             catch (err) {

@@ -25,17 +25,22 @@ let addListItem = (req, res) => {
 //second, getting all the list items for the current user
 
 let getAllListItems = (req, res) => {
-    ToDoListItem.find({username: req.body.username, completedTime: req.body.completedTime}).then((items) => {
-        res.status(200).json({message: "Items retrieved successfully", items: items})
+    const { username, completedTime } = req.query;
+  
+    ToDoListItem.find({ username, completedTime })
+      .then((items) => {
+        console.log(items)
+        res.status(200).json({ message: "Items retrieved successfully", items });
         console.log("Items retrieved successfully");
-    }).catch((err) => {
-        res.status(500).json({message: "Error retrieving items", error: err})
+      })
+      .catch((err) => {
+        res.status(500).json({ message: "Error retrieving items", error: err });
         console.log("Error retrieving items");
-    });
-}
-
+      });
+};
+  
 //usually we would need something like getting a specifc item, but we can search the item from the items array that we get from getAllListItems
-
+    
 //third, updating a list item
 
 let updateListItem = (req, res) => {

@@ -1,5 +1,2 @@
 
-const portCall = "http://localhost:5000"
-const token = ""
-
-export {portCall, token}
+export const portCall = "http://localhost:5000"
