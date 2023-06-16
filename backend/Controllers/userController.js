@@ -93,3 +93,5 @@ let deleteUser = (req, res) => { //this is for the user to delete their own prof
 }
 
 module.exports = { signup, login, addUser, editUser, deleteUser };
+
+//final version of userController.js

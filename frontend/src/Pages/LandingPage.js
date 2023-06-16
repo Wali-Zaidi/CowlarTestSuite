@@ -87,4 +87,6 @@ function LandingPage() {
     )
 }
 
+// final version
+
 export default LandingPage; 

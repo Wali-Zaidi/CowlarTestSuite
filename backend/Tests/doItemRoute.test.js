@@ -55,5 +55,7 @@ describe('testing the doItem route', () => {
     //     })
     //     expect(response.statusCode).toBe(200);
     //     expect(response.body.message).toBe("Item deleted successfully");
-    // });
+    // }); works, not now tho, the item is gone
 })
+
+//final version of doItemRoute.test.js

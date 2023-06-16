@@ -28,3 +28,5 @@ const toDoListSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('ToDoList', toDoListSchema);
+
+//final version of doItemModel.js

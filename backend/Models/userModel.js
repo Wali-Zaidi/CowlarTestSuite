@@ -22,3 +22,5 @@ const userSchema = new mongoose.Schema({
 //username mostly for frontend display purposes
 
 module.exports = mongoose.model('ListUsers', userSchema);
+
+//final version of userModel.js

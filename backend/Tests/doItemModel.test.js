@@ -82,3 +82,5 @@ describe('Testing the functionality of the doItem model', () => { //basically te
     }); //this is the last test, so we can delete the item1 we created in the first test
 
 });
+
+//final version of doItemModel.test.js

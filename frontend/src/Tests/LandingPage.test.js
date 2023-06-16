@@ -32,3 +32,5 @@ describe('LandingPage', () => {
     );
   });
 });
+
+// final version of LandingPage.test.js
