@@ -1,48 +1,34 @@
-import {render, screen} from '@testing-library/react';
-import LandingPage from '../Pages/LandingPage';
-jest.mock('axios');
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+jest.mock('axios'); // Mock the axios module
+import axios from 'axios';
+import LandingPage from '../LandingPage';
 
+describe('LandingPage', () => {
+  it('renders the login form', () => {
+    const { getByLabelText } = render(<LandingPage />);
 
-test('renders mainDiv', () => {
-    render(<LandingPage />);
-    const mainDiv = screen.getByTestId('mainDiv');
-    expect(mainDiv).toBeInTheDocument();
+    expect(getByLabelText('Username:')).toBeInTheDocument();
+    expect(getByLabelText('Password:')).toBeInTheDocument();
+    expect(getByLabelText('Email:')).toBeInTheDocument();
+  });
+
+  it('handles login form submission', async () => {
+    const { getByLabelText, getByText } = render(<LandingPage />);
+    const usernameInput = getByLabelText('Username:');
+    const passwordInput = getByLabelText('Password:');
+    const loginButton = getByText('Login');
+
+    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+
+    axios.post.mockResolvedValueOnce({ data: { message: 'Login successful' } });
+
+    fireEvent.click(loginButton);
+
+    expect(axios.post).toHaveBeenCalledWith(
+      expect.stringContaining('/user/login'),
+      expect.objectContaining({ username: 'testuser', password: 'testpassword' })
+    );
+  });
 });
-
-test('renders loginDiv', () => {
-    render(<LandingPage />);
-    const loginDiv = screen.getByTestId('loginDiv');
-    expect(loginDiv).toBeInTheDocument();
-});
-
-test('renders loginForm', () => {
-    render(<LandingPage />);
-    const loginForm = screen.getByTestId('loginForm');
-    expect(loginForm).toBeInTheDocument();
-});
-
-describe('testing the login form', () => {
-    test('testing the username field', () => {
-        render(<LandingPage />);
-        const usernameField = screen.getByTestId('username');
-        expect(usernameField).toBeInTheDocument();
-        expect(usernameField).toHaveAttribute('name', 'username');
-        usernameField.value = 'test';
-        expect(usernameField.value).toBe('test');
-        usernameField.submit();
-        expect(usernameField.value).toBe('test');
-    });
-
-    test('testing the password field', () => {
-        render(<LandingPage />);
-        const passwordField = screen.getByTestId('passwordField');
-        expect(passwordField).toBeInTheDocument();
-    });
-
-    test('testing the login button', () => {
-        render(<LandingPage />);
-        const loginButton = screen.getByTestId('loginButton');
-        expect(loginButton).toBeInTheDocument();
-    });
-});
-
