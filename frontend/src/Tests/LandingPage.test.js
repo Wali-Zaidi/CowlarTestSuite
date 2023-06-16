@@ -1,5 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import LandingPage from '../Pages/LandingPage';
+jest.mock('axios');
+
 
 test('renders mainDiv', () => {
     render(<LandingPage />);
