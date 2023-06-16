@@ -18,42 +18,25 @@ function LandingPage() {
             ...user,
             [event.target.name]: event.target.value
         })
-        // console.log(user); for testing purposes
     }
 
     const handleSubmit = async(event) => {
 
         event.preventDefault();
         if (event.target.value == "Login") {
-            //checking to see if the portcall will work
-            // axois.post(`${portCall}/user/login`, user).then((response) => {
-            //     console.log(response.data);
-            //     sessionStorage.setItem('token', response.data.token);
-            //     showAlert(response.data.message)
-            // }).catch((err) => {
-            //     console.log(err);
-            // }) for testing the api calls
             try {
                 const response = await axois.post(`${portCall}/user/login`, user);
                 console.log(response.data);   
-                // sessionStorage.setItem('token', response.data.token);
-                // console.log(sessionStorage.getItem('token'));
                 showAlert(response.data.message)
                 sessionStorage.setItem('username', user.username);
                 window.location.href = '/list';
             }
             catch (err) {
                 console.log(err);
+                showAlert(err.message);
             }
         }
         else if (event.target.value == "Register") {
-            // axois.post(`${portCall}/user/signup`, user).then((response) => {
-            //     console.log(response.data);
-            //     showAlert(response.data.message)
-            // }).catch((err) => {
-            //     console.log(err);
-            // }) for testing the api calls
-        
             try { 
                 const response = await axois.post(`${portCall}/user/signup`, user);
                 console.log(response.data);
@@ -61,9 +44,8 @@ function LandingPage() {
             }
             catch (err) {
                 console.log(err);
-                showAlert(err.response.data.message);
+                showAlert(err.message);
             }
-        
         }
     }
     
@@ -77,8 +59,7 @@ function LandingPage() {
         }, 4000);
     }
 
-
-    return( //mostly a rough draft, styling will come later on 
+    return( //mostly a rough draft, styling will come later on => resolved
         <div id='mainDiv'>
             <div id='loginDiv'>
                 <div id='loginForm'>

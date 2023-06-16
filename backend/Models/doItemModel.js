@@ -7,7 +7,7 @@ const toDoListSchema = new mongoose.Schema({
         max: 30
     }, 
     title: {
-        type: String,
+        type: String,   
         required: true
     },
     description: String,

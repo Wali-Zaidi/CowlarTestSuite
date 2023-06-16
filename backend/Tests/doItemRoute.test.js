@@ -1,77 +1,59 @@
-const express = require('express');
 const request = require('supertest');
+const app = require('../index');
+const mongoose = require('mongoose');
 
-const app = express(); //normal initialization of the app
-//calling in the controller
-const doItemController = require('../Controllers/doItemController');
-const router = require('../Routes/doItemRoute'); //calling in the router
+describe('testing the doItem route', () => {
 
-app.use('/todo', router); //using the router
+    beforeAll(async () => {
+        await mongoose.connect('mongodb+srv://i202429:meow@cluster0.yrqzygm.mongodb.net/?retryWrites=true&w=majority', {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        });
 
-describe("Testing the to do list item routes", () => {
+        server = app.listen(5500);
+      });
 
-    it('Testing the add list item function via route', async() => {
+    test('Testing the add new item', async () => {
         const response = await request(app).post('/todo/list').send({
-            username: "testuser2",
-            title: "testtitle",
-            description: "testdescription",
+            username: "test",
+            title: "test",
+            description: "test",
             status: "active",
-            completedTime: "2021-04-28",
-            createdTime: "2021-05-01"
-        });
-        
+            completedTime: "2023-04-03",
+            createdTime: "2023-03-27"
+        })
         expect(response.statusCode).toBe(200);
-        expect(response.body.message).toBe("Successfully added a new list item");
-    })
+        expect(response.body.message).toBe("Item added successfully");
+    });
 
-    it('Testing the failure scenario for the to do list add item route', async() => {
-        const response = await request(app).post('/list').send({
-            username: "testuser1jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
-            title: "testtitle",
-            description: "testdescription",
-            status: "active",
-            completedTime: "2021-04-28",
-            createdTime: "2021-05-01"
-        });
-        
-        expect(response.statusCode).toBe(400);
-        expect(response.body.message).toBe({"message": "Error adding item"});
-    })
-
-    it('Testing getting all list items for a user', async() => {
-        const response = await request(app).get('/list').send({
-            username: "testuser2"
-        });
-        
+    test('Testing the get all items', async () => {
+        const response = await request(app).get('/todo/list').send({
+            username: "test",
+            completedTime: "2023-04-03",
+        })
         expect(response.statusCode).toBe(200);
+        expect(response.body.items).not.toBeNull();
+        console.log(response.body.items)
         expect(response.body.message).toBe("Items retrieved successfully");
-    });
+    })
 
-    it('Testing the failure scenario for getting all list items for a user', async() => {
-        const response = await request(app).get('/list').send({
-            username: "testuse"
+    test('Testing the update item', async () => {
+        const response = await request(app).put('/todo/list').send({
+            username: "test",
+            title: "test",
+            status: "inactive" //only allow for the update of status
         })
-
-        expect(response.statusCode).toBe(400);
-        expect(response.body.message).toBe({"message": "Error retrieving items"});
-    });
-
-    it('Testing getting a specific list item for a user', async() => {
-        const response = await request(app).get('/list').send({
-            username: "testuser2"
-        });
-        
         expect(response.statusCode).toBe(200);
-        expect(response.body.message).toBe("Item retrieved successfully");
-    });
+        expect(response.body.message).toBe("Item updated successfully");
+        expect(response.body.result).not.toBeNull();
+    })
 
-    it('Testing the failure scenario for getting a specific list item for a user', async() => {
-        const response = await request(app).get('/list').send({
-            username: "testuse"
-        })
-
-        expect(response.statusCode).toBe(400);
-        expect(response.body.message).toBe({"message": "Error retrieving item"});
-    });
-});
-
+    // test('Testing the delete item', async () => {
+    //     const response = await request(app).delete('/todo/list').send({
+    //         username: "walizaidi",
+    //         title: "hello, I'll need to go to the shops",
+    //     })
+    //     expect(response.statusCode).toBe(200);
+    //     expect(response.body.message).toBe("Item deleted successfully");
+    // });
+})

@@ -33,11 +33,8 @@ function ToDoPage() {
 
     const handleDateChange = (event) => {
         event.preventDefault();
-        console.log(event.target.value);
         let stringDay = event.target.value;
         stringDay = stringDay.toString();
-        console.log(stringDay);
-        console.log(stringDay +" is the day"); //all of this just to make sure that the data going to the backend is a string
         setDay(stringDay);
     }; //this is to handle the date change
 
@@ -56,13 +53,11 @@ function ToDoPage() {
                 "completedTime": day
             }});
             tempList = response.data.items; //this is to get the items array from the response
-            console.log(tempList + " is the list");
             for (let i = 0; i < tempList.length; i++) {
                 tempList[i].id = i; //this is to add an id to each item in the array, so that we can use it in the table
             }
             setListData(tempList);
         } catch (err) {
-          console.log(err); 
           showAlert(err.response.data.message);
         }
     };
@@ -81,11 +76,9 @@ function ToDoPage() {
                 "title": selectedRow.childNodes[1].textContent,
                 "status": "inactive",
             });
-            console.log(response.data);
             showAlert(response.data.message);
         }
         catch (err) {
-            console.log(err);
             showAlert(err.response.data.message);
         }
     }
@@ -111,7 +104,6 @@ function ToDoPage() {
             showAlert(response.data.message);
         }
         catch (err) {
-            console.log(err);
             showAlert(err.response.data.message);
         }
     };
@@ -124,18 +116,15 @@ function ToDoPage() {
     
     const onFormSubmit = async(event) => {
         event.preventDefault();
-        console.log(toDo);
         toDo.createdTime = day;
         try { 
             const response = await axios.post(`${portCall}/todo/list`, toDo);
-            console.log(response.data);
             showAlert(response.data.message);
             setShowForm(false);
             setDay(toDo.createdTime) //this is to make sure that the list is updated when a new item is added
             fetchListItems();
         }
         catch (err) {
-            console.log(err);
             showAlert(err.response.data.message);
         }
     }
