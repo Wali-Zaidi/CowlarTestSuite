@@ -24,7 +24,7 @@
     background-position: center;
     position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }
@@ -116,14 +116,12 @@ header {
 
 /* ---------- TO DO CSS ----------------- */
 
-
 #containerDiv {
-    width: 30%;
-    height: 30%;
+    width: 40%;
+    height: 60%;
     border-radius: 10px;
-    padding: 50px;
+    padding: 30px;
     /* display: flex; */
-    justify-content: center;
 }
 
 /* took this code from stackOverflow, for getting the date button to show only the calender icon */
@@ -139,7 +137,7 @@ header {
 }
 
 #dateSelectionDiv input {
-    width: 9%;
+    width: 5%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -161,11 +159,11 @@ header {
 #dateSelectionDiv {
     display: flex;
     flex-direction: row;
-    width: 90%;
-    height: 40px;
-    justify-content: space-between;
-    /* background-color: #ffffff; */
+    width: 96%;
     padding: 10px;
+    height: 40px;
+    justify-content: space-around;
+    /* background-color: #ffffff; */
     box-shadow: #000000 0px 0px 10px 0px;
     align-items: center;
     opacity: 70%;
@@ -180,3 +178,115 @@ header {
     width: 100%;
     opacity: 100%;
 }
+
+#toDoListDiv {
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+  
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    margin: 0 auto;
+    opacity: 90%;
+}
+  
+#toDoListTable th, td {
+    padding: 10px;
+}
+  
+#toDoListTable th {
+    background-color: #f2f2f2;
+}
+  
+#toDoListTable tr {
+    background-color: white;
+}
+  
+#toDoListTable td {
+    border-bottom: none;
+}
+  
+#toDoListTable tr:hover {
+    background-color: #f9f9f9;
+}
+  
+#toDoListTable td:not(:last-child) {
+    padding-right: 20px;
+}
+  
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+/* styling for the radio buttons, took a while to dial these in */
+/* changed these to checkboxes for easier life */
+
+input[type="checkbox"] { /* HIDE RADIO */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    margin: 0;
+}
+  
+input[type="checkbox"]::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    background-color: transparent;
+    margin-right: 6px;
+}
+  
+input[type="checkbox"]:checked::before {
+    content: '\2713'; /* Tick mark symbol */
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #000;
+    background-color: #ccc;
+}
+
+/* now for styling the input buttons and stuff */
+
+#formDiv {
+    width: 30%;
+    height: 60%;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+#toDoListFormAdd {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 95%;
+    opacity: 100%;
+    margin: 10px;
+}
+
+#formDiv input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+#formDiv button {
+    width: 95%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+

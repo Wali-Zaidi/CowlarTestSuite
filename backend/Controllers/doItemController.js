@@ -25,9 +25,9 @@ let addListItem = (req, res) => {
 //second, getting all the list items for the current user
 
 let getAllListItems = (req, res) => {
-    const { username, completedTime } = req.query;
+    const { username, completedTime} = req.query;
   
-    ToDoListItem.find({ username, completedTime })
+    ToDoListItem.find({ username, completedTime, status: "active"})
       .then((items) => {
         console.log(items)
         res.status(200).json({ message: "Items retrieved successfully", items });
@@ -44,15 +44,14 @@ let getAllListItems = (req, res) => {
 //third, updating a list item
 
 let updateListItem = (req, res) => {
-    ToDoListItem.updateOne({title: req.body.title}, {
-        username: req.body.username,
-        title: req.body.title,
-        description: req.body.description,
+    const { username, title, status } = req.body;
+    console.log(req.body);
+
+    ToDoListItem.findOneAndUpdate({username, title}, {
         status: req.body.status,
-        completedTime: req.body.completedTime,
-        createdTime: req.body.createdTime
-    }).then((result) => {
-        res.status(200).json({message: "Item updated successfully", result: result})
+    }, {new: true}).then((result) => {
+        console.log(result);
+        res.status(200).json({message: "Item updated successfully", result: result});
         console.log("Item updated successfully");
     }).catch((err) => {
         res.status(500).json({message: "Error updating item", error: err})
@@ -63,13 +62,19 @@ let updateListItem = (req, res) => {
 //and finally, deleting a list item
 
 let deleteListItem = (req, res) => {
-    ToDoListItem.deleteOne({_id: req.body._id}).then((result) => {
-        res.status(200).json({message: "Item deleted successfully", result: result})
-        console.log("Item deleted successfully");
-    }).catch((err) => {
-        res.status(500).json({message: "Error deleting item", error: err})
-        console.log("Error deleting item");
-    });
-}
+    const { username, title } = req.query;
+    console.log(username, title)
+    ToDoListItem.deleteOne({ username, title }).then((result) => {
+        if (result.deletedCount === 0) {
+            res.status(404).json({ message: "Item not found" });
+            console.log("Item not found");
+        } else {
+            res.status(200).json({ message: "Item deleted successfully" });
+            console.log("Item deleted successfully");
+        }}).catch((err) => {
+            res.status(500).json({ message: "Error deleting item", error: err });
+            console.log("Error deleting item", err);
+      });
+};
 
 module.exports = { addListItem, getAllListItems, updateListItem, deleteListItem };
