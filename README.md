@@ -4,7 +4,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Screenshots](#screenshots)
+
 
 ## Installation
 
@@ -47,15 +47,3 @@ This will start the react application on the frontend, and for the backend, will
   - Calender Integration
   - All CRUD operations accounted for
 
-## Screenshots
-
-
-![image](https://imgur.com/DZaUM7b)
-Landing Page
-
-![image](https://imgur.com/U6AzHbk)
-Main To-Do List Page
-
-![image](https://imgur.com/6M4D6lK)
-
-![image](https://imgur.com/ZYU7TuT)
