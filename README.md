@@ -50,12 +50,12 @@ This will start the react application on the frontend, and for the backend, will
 ## Screenshots
 
 
-![image](https://github.com/Wali-Zaidi/CowlarTestSuite/assets/109783661/bc00ad9b-a441-4820-8e79-c295e700a0f2)
+![image](https://imgur.com/DZaUM7b)
 Landing Page
 
-![image](https://github.com/Wali-Zaidi/CowlarTestSuite/assets/109783661/90db0133-af0c-49a5-93e4-93ffb5a9b01a)
+![image](https://imgur.com/U6AzHbk)
 Main To-Do List Page
 
-![image](https://github.com/Wali-Zaidi/CowlarTestSuite/assets/109783661/c1c6569a-5c8a-4d5e-9da2-fa98bde2ea18)
+![image](https://imgur.com/6M4D6lK)
 
-![image](https://github.com/Wali-Zaidi/CowlarTestSuite/assets/109783661/e806b695-3f92-49ea-ad5b-f153e4acb076)
+![image](https://imgur.com/ZYU7TuT)
