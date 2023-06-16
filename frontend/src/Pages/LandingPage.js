@@ -1,7 +1,7 @@
 import React from 'react';
 import axois from 'axios';
 import {portCall} from '../Components/config';
-import '../CSS/LandingPage.css';
+import '../CSS/View.css';
 
 function LandingPage() {
 

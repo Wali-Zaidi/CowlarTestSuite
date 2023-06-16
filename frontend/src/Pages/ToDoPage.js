@@ -4,10 +4,12 @@ import React, { useEffect } from 'react';
 import {useState} from 'react';
 import axios from 'axios';
 import {portCall, token} from '../Components/config';
-import '../CSS/LandingPage.css';
+import '../CSS/View.css';
 
 
 function ToDoPage() {
+
+    //------------- STATES -------------
 
     const [day, setDay] = useState("");
     //to hold the list of items
@@ -27,6 +29,8 @@ function ToDoPage() {
 
     const [toDo, setToDo] = useState(toDoAdd);
     
+    //------------- TABLE -------------
+
     const handleDateChange = (event) => {
         event.preventDefault();
         console.log(event.target.value);
@@ -68,7 +72,6 @@ function ToDoPage() {
         let selectedRow = event.target; //do this in bits, as the DOM doesnt like it if you do it all at once
         selectedRow = selectedRow.parentNode;
         selectedRow = selectedRow.parentNode;
-        
         selectedRow.style.opacity = 0.3//this is to change the opacity of the selected row
         selectedRow.disabled = true; //this is to disable the selected row
 
@@ -113,6 +116,8 @@ function ToDoPage() {
         }
     };
 
+    //------------- FORMS -------------
+
     const handleAddButtonClick = () => {
         setShowForm(true);
     };
@@ -150,7 +155,7 @@ function ToDoPage() {
         })
     }
 
-    //for the alerts
+    //------------- ALERTS -------------
 
     const showAlert = (message) => {
         const alertElement = document.createElement('div');
