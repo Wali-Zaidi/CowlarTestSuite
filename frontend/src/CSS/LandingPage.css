@@ -258,9 +258,10 @@ input[type="checkbox"]:checked::before {
 
 #formDiv {
     width: 30%;
-    height: 60%;
+    height: 50%;
     border-radius: 10px;
     padding: 30px;
+    background-color: white;
 }
 
 #toDoListFormAdd {

@@ -44,7 +44,7 @@ function ToDoPage() {
     }, [day]);  //first useeffect to handle the date updation
 
     //to handle the date change
-    const fetchListItems = async (event) => { //this also fetches our table items when date is selected
+    const fetchListItems = async () => { //this also fetches our table items when date is selected
         let tempList = [];
         try {
             const response = await axios.get(`${portCall}/todo/list`, {params: {
@@ -119,29 +119,35 @@ function ToDoPage() {
     
     const onFormSubmit = async(event) => {
         event.preventDefault();
-        let form = event.target;
-        let formInputs = form.childNodes;
-
-        let toDoAdd = {
-            username: sessionStorage.getItem('username'),
-            title: formInputs[0] || "",
-            description: formInputs[1] || "",
-            status: "active",
-            completedTime: formInputs[2] || day,
-            createdTime: day
-        }
-
+        console.log(toDo);
+        toDo.createdTime = day;
         try { 
-            const response = await axios.post(`${portCall}/todo/list`, toDoAdd);
+            const response = await axios.post(`${portCall}/todo/list`, toDo);
             console.log(response.data);
             showAlert(response.data.message);
             setShowForm(false);
+            setDay(toDo.createdTime) //this is to make sure that the list is updated when a new item is added
             fetchListItems();
         }
         catch (err) {
             console.log(err);
             showAlert(err.response.data.message);
         }
+    }
+
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          // Call the submit function when Enter key is pressed
+          onFormSubmit(event);
+        }
+    };
+
+    const handleFormInputChange = (event) => {
+        setToDo({
+            ...toDo,
+            [event.target.name]: event.target.value
+        })
     }
 
     //for the alerts
@@ -176,11 +182,8 @@ function ToDoPage() {
                                 </td>
                                 <td>{item.title}</td>
                                 <td className={`ellipsis ${showDeleteButton ? 'hide' : ''}`} onClick={handleCellClick}>
-                                    {showDeleteButton ? (
-                                    <button onClick={handleDeleteClick}>Delete</button>
-                                    ) : (
-                                    ':::'
-                                    )}
+                                    {/* this here is the code to show the ellipsis and then the delete button */}
+                                    {showDeleteButton ? (<button onClick={handleDeleteClick}>Delete</button>) : (':::')}
                                 </td>
                             </tr>
                             ))}
@@ -204,13 +207,13 @@ function ToDoPage() {
                                 <label id="toDoListFormAddLabel">Add New Task:</label>
                             </div>
                             <div id="toDoListFormAddInputDiv">
-                                <input type="text" id="toDoListFormAddInput" name="toDoListFormAddInput" placeholder='Title'></input>
+                                <input type="text" id="toDoListFormAddInput" name="title" placeholder='Title' value={toDo.title} onChange={handleFormInputChange}></input>
                             </div>
                             <div id="toDoListFormAddInputDiv">
-                                <input type="text" id="toDoListFormAddInput" name="toDoListFormAddInput" placeholder='Description'></input>
+                                <input type="date" id="toDoListFormAddInput" name="completedTime" placeholder='Due Date' value={toDo.completedTime} onChange={handleFormInputChange}></input>
                             </div>
                             <div id="toDoListFormAddInputDiv">
-                                <input type="date" id="toDoListFormAddInput" name="toDoListFormAddInput" placeholder='Due Date'></input>
+                                <input type="text" id="toDoListFormAddInput" name="description" placeholder='Description' value={toDo.description} onKeyDown={handleKeyDown} onChange={handleFormInputChange}></input>
                             </div>
                             <div id="toDoListFormAddInputDiv">
                                 <input type="submit" id="toDoListFormAddInput" name="toDoListFormAddInput" value="Add" onClick={onFormSubmit}></input>
