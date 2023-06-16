@@ -34,7 +34,11 @@ This installation will finish considerably faster than the frontend one.
         
 ## Usage
 
-Running the application is as simple as installing it. Simply navigate to the frontend and backend, in different terminals on your IDE, and in both type **"npm start"**. This will start the react application on the frontend, and for the backend, will start the server.
+Running the application is as simple as installing it. Simply navigate to the frontend and backend, in different terminals on your IDE, and in both type: 
+
+      npm start
+
+This will start the react application on the frontend, and for the backend, will start the server.
  
  ## Features
  
