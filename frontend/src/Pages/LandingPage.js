@@ -33,7 +33,7 @@ function LandingPage() {
             }
             catch (err) {
                 console.log(err);
-                showAlert(err.message);
+                showAlert(err.response.data.message);
             }
         }
         else if (event.target.value == "Register") {
@@ -44,7 +44,7 @@ function LandingPage() {
             }
             catch (err) {
                 console.log(err);
-                showAlert(err.message);
+                showAlert(err.response.data.message);
             }
         }
     }
