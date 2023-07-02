@@ -1,0 +1,37 @@
+//----------------------------- FRONTEND -------------------------------------
+
+//add in components for the todo form
+
+// create frontend services for user and todo items
+
+// correct the directory structure, ensureing the config, assests and other folders, and putting the relvant files there
+
+// add in the rest of the frontend test cases
+
+// use .module.css instead of .css for the css files
+
+// routing should be in a seperate file from the app.js 
+
+// user should not be able to create a new user without adding in the username
+
+// add in form validation for the todo form
+
+//----------------------------- BACKEND -------------------------------------
+
+// resfresh token something???
+
+// user a seperate service layer for the backend, which communicates with the databse
+
+//use async await as much as possible
+
+//use some validator for the backend
+
+//send back response in sign up controller
+
+//middleware should be in a seperate file 
+
+//remove the env (actual), push the sample.env there instead
+
+//docker compose was added ?????
+
+// serparte the file for the routes that imports all routes files and set up the routes

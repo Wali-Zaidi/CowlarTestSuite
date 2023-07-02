@@ -1,0 +1,27 @@
+//add task form dependant on setting the date, while the add task form takes time selection as input
+        /basically, its confusion regarding the purpose of the two selections of date, improve the UI to eliminate this problem
+
+//use a css framework to make the UI look better
+
+//add in a loader for when api calls are in progress
+
+//add in a log out button
+
+//show "Created New User" message when a new user is created
+
+//keep either the username or the email as the primary login credential, not both
+
+//add in a message for "Entry Updated" when an entry is updated
+
+//add in a message in case of server connection error
+
+//fix the checkbox design and make sure it follows the mock design
+        /enable the checkbox to be checked off again
+
+//fix the calender button to ensure that it opens when the button is clicked anywhere, not just the calender icon
+
+//somehow fix the list moving to the left to make space for the add new task form
+
+//add in form validation
+
+//display all errors in the UI
