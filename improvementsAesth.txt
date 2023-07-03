@@ -3,11 +3,11 @@
 
 //use a css framework to make the UI look better
 
-//add in a loader for when api calls are in progress
+//add in a loader for when api calls are in progress --> currently underway
 
 //add in a log out button
 
-//show "Created New User" message when a new user is created
+//show "Created New User" message when a new user is created --> already exists???
 
 //keep either the username or the email as the primary login credential, not both
 

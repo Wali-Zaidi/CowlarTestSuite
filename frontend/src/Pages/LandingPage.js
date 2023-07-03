@@ -2,6 +2,10 @@ import React from 'react';
 import axois from 'axios';
 import {portCall} from '../Components/config';
 import '../CSS/View.css';
+import Loader from '../Components/Loader';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 function LandingPage() {
 
@@ -13,6 +17,8 @@ function LandingPage() {
 
     const [user, setUser] = React.useState(userData);
 
+    const [loading, setLoading] = React.useState(false);
+
     const handleChange = (event) => { 
         setUser({
             ...user,
@@ -23,6 +29,7 @@ function LandingPage() {
     const handleSubmit = async(event) => {
 
         event.preventDefault();
+        setLoading(true);
         if (event.target.value == "Login") {
             try {
                 const response = await axois.post(`${portCall}/user/login`, user);
@@ -47,10 +54,11 @@ function LandingPage() {
                 showAlert(err.response.data.message);
             }
         }
+        setLoading(false);
     }
     
     const showAlert = (message) => {
-        const alertElement = document.createElement('div');
+        const alertElement = document.createElement('Container');
         alertElement.classList.add('alert');
         alertElement.textContent = message; 
         document.getElementById('mainDiv').appendChild(alertElement);
@@ -60,30 +68,55 @@ function LandingPage() {
     }
 
     return( //mostly a rough draft, styling will come later on => resolved
-        <div id='mainDiv'>
-            <div id='loginDiv'>
-                <div id='loginForm'>
-                    <form onSubmit={handleSubmit}>
-                        <div id='usernameDiv'>
+        <Container id='mainDiv' className='mw-100'>
+            <Container id='loginDiv'>
+                <Container id='loginForm'>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="formBasicUsername">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type="text" placeholder="Enter username" name='username' value={user.username} onChange={handleChange} required/>
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" placeholder="Enter password" name='password' value={user.password} onChange={handleChange} required/>
+                        </Form.Group>
+                        <Form.Group controlId='formSubmit'>
+                            <Button type="submit" value='Login' onClick={handleSubmit}>
+                                Login
+                            </Button>
+                            <Button type="submit" value='Register' onClick={handleSubmit}>
+                                Register
+                            </Button>
+                        </Form.Group>
+                        <Form.Group controlId='formLoader'>
+                            {loading && <Loader/>}
+                        </Form.Group>
+                        
+                    </Form>
+                    {/* <form onSubmit={handleSubmit}>
+                        <Container id='usernameDiv'>
                             <label> Username: </label>
                             <input type='text' id='username' name='username' value={user.username} onInput={handleChange} required/>
-                        </div>
-                        <div id='passwordDiv'>
+                        </Container>
+                        <Container id='passwordDiv'>
                             <label> Password: </label>
                             <input type='password' id='password' name='password' value={user.password} onChange={handleChange} required/>
-                        </div>
-                        <div id='emailDiv'>
+                        </Container>
+                        <Container id='emailDiv'>
                             <label> Email: </label>
                             <input type='email' id='email' name='email' value={user.email} onChange={handleChange} required/>
-                        </div>
-                        <div id='submitDiv'>
+                        </Container>
+                        <Container id='submitDiv'>
                             <input type='button' id='submit' name='submit' value='Login' onClick={handleSubmit}/>
                             <input type='submit' id='submit' name='submit' value='Register' onClick={handleSubmit}/>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+                        </Container>
+                        <Container id='loaderDiv'>
+                            {loading && <Loader/>}
+                        </Container>
+                    </form> */}
+                </Container>
+            </Container>
+        </Container>
     )
 }
 
