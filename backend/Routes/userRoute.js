@@ -19,9 +19,6 @@ const isAuthorized = (req, res, next) => {
 
 router.post('/signup', userController.signup)
 router.post('/login',  userController.login) //gets token from this function right here
-router.post('/properties', isAuthorized, userController.addUser) //and then uses it here
-router.put('/properties', isAuthorized, userController.editUser)
-router.delete('/properties', isAuthorized, userController.deleteUser)
 
 /*
 

@@ -18,6 +18,7 @@ let addListItem = (req, res) => {
         console.log("Item added successfully");
     }).catch((err) => {
         res.status(500).json({message: "Error adding item", error: err})
+        console.log(err)
         console.log("Error adding item");
     });
 }

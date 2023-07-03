@@ -5,6 +5,10 @@ import {useState} from 'react';
 import axios from 'axios';
 import {portCall, token} from '../Components/config';
 import '../CSS/View.css';
+import Loader from '../Components/Loader';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 
 function ToDoPage() {
@@ -147,7 +151,7 @@ function ToDoPage() {
     //------------- ALERTS -------------
 
     const showAlert = (message) => {
-        const alertElement = document.createElement('div');
+        const alertElement = document.createElement('Container');
         alertElement.classList.add('alert');
         alertElement.textContent = message; 
         document.getElementById('mainDiv').appendChild(alertElement);
@@ -157,16 +161,16 @@ function ToDoPage() {
     }
 
     return (
-        <div id="mainDiv">
-            <div id="containerDiv">
-                <div id="dateSelectionDiv">
-                    <div id="dateSelectionLabelDiv">
+        <Container id="mainDiv" className='mw-100'>
+            <Container id="containerDiv">
+                <Container id="dateSelectionDiv">
+                    <Container id="dateSelectionLabelDiv">
                         <label id="dateSelectionLabel">Tasks For: {day}</label>
-                    </div>
+                    </Container>
                     {/* going over the documentation, placeholder and other html tags wont work with this, need another solution => fixed */}
                     <input type='date' id='dateSelection' name='dateSelection' value={day} onChange={handleDateChange}></input>
-                </div>
-                <div id='toDoListDiv'>
+                </Container>
+                <Container id='toDoListDiv'>
                     <table id="toDoListTable">
                         <tbody> 
                             {listData.map((item, i) => (
@@ -183,41 +187,41 @@ function ToDoPage() {
                             ))}
                         </tbody>
                     </table>
-                </div>
-                <div id="buttonDiv">
+                </Container>
+                <Container id="buttonDiv">
                     <button id="addButton" onClick={handleAddButtonClick}>Add New Task</button>
                     {
                         showDeleteButton && (
                             <button id="deleteButton" onClick={() => setShowDeleteButton(false)} >Cancel Deletion</button>
                         )
                     }
-                </div>
-            </div>
+                </Container>
+            </Container>
             {showForm && (
-                <div id="formDiv">
+                <Container id="formDiv">
                     <form id="toDoListFormAdd" className="toDoListForm">
-                        <div id="toDoListFormAdd">
-                            <div id="toDoListFormAddLabelDiv">
+                        <Container id="toDoListFormAdd">
+                            <Container id="toDoListFormAddLabelDiv">
                                 <label id="toDoListFormAddLabel">Add New Task:</label>
-                            </div>
-                            <div id="toDoListFormAddInputDiv">
+                            </Container>
+                            <Container id="toDoListFormAddInputDiv">
                                 <input type="text" id="toDoListFormAddInput" name="title" placeholder='Title' value={toDo.title} onChange={handleFormInputChange}></input>
-                            </div>
-                            <div id="toDoListFormAddInputDiv">
+                            </Container>
+                            <Container id="toDoListFormAddInputDiv">
                                 <input type="date" id="toDoListFormAddInput" name="completedTime" placeholder='Due Date' value={toDo.completedTime} onChange={handleFormInputChange}></input>
-                            </div>
-                            <div id="toDoListFormAddInputDiv">
+                            </Container>
+                            <Container id="toDoListFormAddInputDiv">
                                 <input type="text" id="toDoListFormAddInput" name="description" placeholder='Description' value={toDo.description} onKeyDown={handleKeyDown} onChange={handleFormInputChange}></input>
-                            </div>
-                            <div id="toDoListFormAddInputDiv">
+                            </Container>
+                            <Container id="toDoListFormAddInputDiv">
                                 <input type="submit" id="toDoListFormAddInput" name="toDoListFormAddInput" value="Add" onClick={onFormSubmit}></input>
                                 <input type="button" id="toDoListFormAddInput" name="toDoListFormAddInput" value="Cancel" onClick={() => setShowForm(false)}></input>
-                            </div>
-                        </div>
+                            </Container>
+                        </Container>
                     </form>
-                </div>
+                </Container>
             )}
-        </div>
+        </Container>
     )
 }
 
