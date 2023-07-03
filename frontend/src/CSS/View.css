@@ -67,15 +67,22 @@ header {
 
 /* --------- LANDING PAGE CSS -------------- */
 
+#loginDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 #loginForm {
     background-color: #fcfcfcaf;
-    width: 60%;
+    width: 30%;
     height: 70%;
     border-radius: 10px;
     padding: 50px;
     box-shadow: 0px 0px 10px 0px #000000;
-    /* display: flex;
-    justify-content: center; */
+    display: flex;
+    /* justify-content: center; */
     align-items: center;
     justify-content: center;
     opacity: 95%;

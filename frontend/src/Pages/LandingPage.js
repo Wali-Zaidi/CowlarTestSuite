@@ -30,7 +30,7 @@ function LandingPage() {
 
         event.preventDefault();
         setLoading(true);
-        if (event.target.value == "Login") {
+        if (event.target.value === "Login") {
             try {
                 const response = await axois.post(`${portCall}/user/login`, user);
                 console.log(response.data);   
@@ -43,7 +43,7 @@ function LandingPage() {
                 showAlert(err.response.data.message);
             }
         }
-        else if (event.target.value == "Register") {
+        else if (event.target.value === "Register") {
             try { 
                 const response = await axois.post(`${portCall}/user/signup`, user);
                 console.log(response.data);
@@ -68,9 +68,9 @@ function LandingPage() {
     }
 
     return( //mostly a rough draft, styling will come later on => resolved
-        <Container id='mainDiv' className='mw-100'>
-            <Container id='loginDiv'>
-                <Container id='loginForm'>
+        <Container id='mainDiv' className='mw-100 container-fluid'>
+            <Container id='loginDiv' className='container-sm mw-30'>
+                <Container id='loginForm' className='mw-20 container-sm'>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="formBasicUsername">
                             <Form.Label>Username</Form.Label>
@@ -81,39 +81,17 @@ function LandingPage() {
                             <Form.Control type="password" placeholder="Enter password" name='password' value={user.password} onChange={handleChange} required/>
                         </Form.Group>
                         <Form.Group controlId='formSubmit'>
-                            <Button type="submit" value='Login' onClick={handleSubmit}>
+                            <Button type="submit" value='Login' className='btn btn-secondary' onClick={handleSubmit}>
                                 Login
                             </Button>
-                            <Button type="submit" value='Register' onClick={handleSubmit}>
+                            <Button type="submit" value='Register' className='btn btn-secondary' onClick={handleSubmit}>
                                 Register
                             </Button>
                         </Form.Group>
                         <Form.Group controlId='formLoader'>
                             {loading && <Loader/>}
                         </Form.Group>
-                        
                     </Form>
-                    {/* <form onSubmit={handleSubmit}>
-                        <Container id='usernameDiv'>
-                            <label> Username: </label>
-                            <input type='text' id='username' name='username' value={user.username} onInput={handleChange} required/>
-                        </Container>
-                        <Container id='passwordDiv'>
-                            <label> Password: </label>
-                            <input type='password' id='password' name='password' value={user.password} onChange={handleChange} required/>
-                        </Container>
-                        <Container id='emailDiv'>
-                            <label> Email: </label>
-                            <input type='email' id='email' name='email' value={user.email} onChange={handleChange} required/>
-                        </Container>
-                        <Container id='submitDiv'>
-                            <input type='button' id='submit' name='submit' value='Login' onClick={handleSubmit}/>
-                            <input type='submit' id='submit' name='submit' value='Register' onClick={handleSubmit}/>
-                        </Container>
-                        <Container id='loaderDiv'>
-                            {loading && <Loader/>}
-                        </Container>
-                    </form> */}
                 </Container>
             </Container>
         </Container>
