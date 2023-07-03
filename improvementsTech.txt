@@ -20,7 +20,7 @@
 
 // resfresh token something???
 
-// user a seperate service layer for the backend, which communicates with the databse
+// use a seperate service layer for the backend, which communicates with the databse
 
 //use async await as much as possible
 
@@ -35,3 +35,4 @@
 //docker compose was added ?????
 
 // serparte the file for the routes that imports all routes files and set up the routes
+
