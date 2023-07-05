@@ -17,7 +17,7 @@ let signup = (req, res) => {
         user.save().then((user) => {
             res.status(200).send({message: "User Account Created Successfully!", user: user})
         }).catch((err) => {
-            res.status(400).send({message: "Error occured while creating account", error: err})
+            res.status(400).send({message: "Error: Could not create user, try again.", error: err})
         })
 
     }).catch((err) => {
