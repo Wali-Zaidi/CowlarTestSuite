@@ -9,6 +9,7 @@ import Loader from '../Components/Loader';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import AddTaskForm from '../Components/AddTaskForm';
 
 
 function ToDoPage() {
@@ -118,36 +119,6 @@ function ToDoPage() {
         setShowForm(true);
     };
     
-    const onFormSubmit = async(event) => {
-        event.preventDefault();
-        toDo.createdTime = day;
-        try { 
-            const response = await axios.post(`${portCall}/todo/list`, toDo);
-            showAlert(response.data.message);
-            setShowForm(false);
-            setDay(toDo.createdTime) //this is to make sure that the list is updated when a new item is added
-            fetchListItems();
-        }
-        catch (err) {
-            showAlert(err.response.data.message);
-        }
-    }
-
-    const handleKeyDown = (event) => {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          // Call the submit function when Enter key is pressed
-          onFormSubmit(event);
-        }
-    };
-
-    const handleFormInputChange = (event) => {
-        setToDo({
-            ...toDo,
-            [event.target.name]: event.target.value
-        })
-    }
-
     //------------- ALERTS -------------
 
     const showAlert = (message) => {
@@ -197,30 +168,7 @@ function ToDoPage() {
                     }
                 </Container>
             </Container>
-            {showForm && (
-                <Container id="formDiv">
-                    <form id="toDoListFormAdd" className="toDoListForm">
-                        <Container id="toDoListFormAdd">
-                            <Container id="toDoListFormAddLabelDiv">
-                                <label id="toDoListFormAddLabel">Add New Task:</label>
-                            </Container>
-                            <Container id="toDoListFormAddInputDiv">
-                                <input type="text" id="toDoListFormAddInput" name="title" placeholder='Title' value={toDo.title} onChange={handleFormInputChange}></input>
-                            </Container>
-                            <Container id="toDoListFormAddInputDiv">
-                                <input type="date" id="toDoListFormAddInput" name="completedTime" placeholder='Due Date' value={toDo.completedTime} onChange={handleFormInputChange}></input>
-                            </Container>
-                            <Container id="toDoListFormAddInputDiv">
-                                <input type="text" id="toDoListFormAddInput" name="description" placeholder='Description' value={toDo.description} onKeyDown={handleKeyDown} onChange={handleFormInputChange}></input>
-                            </Container>
-                            <Container id="toDoListFormAddInputDiv">
-                                <input type="submit" id="toDoListFormAddInput" name="toDoListFormAddInput" value="Add" onClick={onFormSubmit}></input>
-                                <input type="button" id="toDoListFormAddInput" name="toDoListFormAddInput" value="Cancel" onClick={() => setShowForm(false)}></input>
-                            </Container>
-                        </Container>
-                    </form>
-                </Container>
-            )}
+            {showForm && <AddTaskForm/>}
         </Container>
     )
 }
