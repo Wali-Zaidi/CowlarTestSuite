@@ -118,7 +118,7 @@ function ToDoPage() {
     const handleAddButtonClick = () => {
         setShowForm(true);
     };
-    
+
     //------------- ALERTS -------------
 
     const showAlert = (message) => {

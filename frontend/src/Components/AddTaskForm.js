@@ -5,16 +5,7 @@ function AddTaskForm(toDo, day) {
     const onFormSubmit = async(event) => {
         event.preventDefault();
         toDo.createdTime = day;
-        try { 
-            const response = await axios.post(`${portCall}/todo/list`, toDo);
-            showAlert(response.data.message);
-            setShowForm(false);
-            setDay(toDo.createdTime) //this is to make sure that the list is updated when a new item is added
-            fetchListItems();
-        }
-        catch (err) {
-            showAlert(err.response.data.message);
-        }
+        
     }
 
     const handleKeyDown = (event) => {
