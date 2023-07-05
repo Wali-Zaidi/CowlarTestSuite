@@ -5,12 +5,11 @@ import {useState} from 'react';
 import axios from 'axios';
 import {portCall, token} from '../Components/config';
 import '../CSS/View.css';
-import Loader from '../Components/Loader';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import AddTaskForm from '../Components/AddTaskForm';
-
+import { addListItem } from '../Service/FrontendService';
+import Modal from 'react-bootstrap/Modal';
 
 function ToDoPage() {
 
@@ -22,6 +21,7 @@ function ToDoPage() {
     const [opacity, setOpacity] = useState(0.88); //to hold the opacity of the selected row
     const [showDeleteButton, setShowDeleteButton] = useState(false); //to hold the state of the delete button
     const [showForm, setShowForm] = useState(false); //to hold the state of the form
+    const [showDatePicker, setShowDatePicker] = useState(false); //to hold the state of the date picker
 
     const toDoAdd = {
         username: sessionStorage.getItem('username'),
@@ -33,11 +33,18 @@ function ToDoPage() {
     }
 
     const [toDo, setToDo] = useState(toDoAdd);
-    
+
+    useEffect(() => {
+        Date.day = new Date().toISOString().slice(0, 10);
+        setDay(Date.day);
+    }, []);
+
+
     //------------- TABLE -------------
 
     const handleDateChange = (event) => {
         event.preventDefault();
+        setShowDatePicker(true);
         let stringDay = event.target.value;
         stringDay = stringDay.toString();
         setDay(stringDay);
@@ -48,6 +55,8 @@ function ToDoPage() {
             fetchListItems();
         }
     }, [day]);  //first useeffect to handle the date updation
+
+    const handleClose = () => setShowDatePicker(false);
 
     //to handle the date change
     const fetchListItems = async () => { //this also fetches our table items when date is selected
@@ -119,6 +128,27 @@ function ToDoPage() {
         setShowForm(true);
     };
 
+    const onFormSubmit = async(event) => {
+        event.preventDefault();
+        toDo.createdTime = day;
+        addListItem(toDo, setShowForm, setDay, fetchListItems);
+    }
+
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          // Call the submit function when Enter key is pressed
+          onFormSubmit(event);
+        }
+    };
+
+    const handleFormInputChange = (event) => {
+        setToDo({
+            ...toDo,
+            [event.target.name]: event.target.value
+        })
+    }
+
     //------------- ALERTS -------------
 
     const showAlert = (message) => {
@@ -139,7 +169,26 @@ function ToDoPage() {
                         <label id="dateSelectionLabel">Tasks For: {day}</label>
                     </Container>
                     {/* going over the documentation, placeholder and other html tags wont work with this, need another solution => fixed */}
-                    <input type='date' id='dateSelection' name='dateSelection' value={day} onChange={handleDateChange}></input>
+                    <Button variant='success' id='dateSelection' name='dateSelection' value={day} onClick={handleDateChange}>Select Date</Button>
+                    <Modal show={showDatePicker} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Select a Date</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                        <input
+                            type="date"
+                            className="form-control"
+                            value={day}
+                            onChange={handleDateChange}
+                        />
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        </Modal.Footer>
+                    </Modal>
+                    {/* <input type='date' id='dateSelection' name='dateSelection' value={day} onChange={handleDateChange}></input> */}
                 </Container>
                 <Container id='toDoListDiv'>
                     <table id="toDoListTable">
@@ -168,7 +217,7 @@ function ToDoPage() {
                     }
                 </Container>
             </Container>
-            {showForm && <AddTaskForm/>}
+            {showForm && AddTaskForm(toDo, setShowForm, handleFormInputChange, handleKeyDown, onFormSubmit)}
         </Container>
     )
 }
