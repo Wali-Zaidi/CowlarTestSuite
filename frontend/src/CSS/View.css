@@ -15,6 +15,14 @@
     text-align: center;
 }
 
+#holderDiv {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
 #mainDiv {
     background-image: url("../Components/Images/Background.jpg");
     height: 100vh;

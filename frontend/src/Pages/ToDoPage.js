@@ -84,12 +84,11 @@ function ToDoPage() {
 
         if (checkbox.checked === false) {
             checkbox.checked = !checkbox.checked;
-            showAlert(await handleRadioClickService(selectedRow.childNodes[1].textContent));
-            
+            showAlert(await handleRadioClickService(selectedRow.childNodes[1].textContent, day));
         }
         else {
             checkbox.checked = !checkbox.checked;
-            showAlert (await handleRadioClickOtherService(selectedRow.childNodes[1].textContent));
+            showAlert (await handleRadioClickOtherService(selectedRow.childNodes[1].textContent, day));
         }
     }
 
@@ -129,7 +128,6 @@ function ToDoPage() {
         setShowForm(false);
     }
 
-
     const handleKeyDown = (event) => {
         if (event.keyCode === 13) {
           event.preventDefault();
@@ -158,69 +156,68 @@ function ToDoPage() {
     }
 
     return (
-        <Container id="mainDiv" className='mw-100'>
-            <Container id="containerDiv">
-                <Container id="dateSelectionDiv">
-                    <Container id="dateSelectionLabelDiv">
-                        <label id="dateSelectionLabel">Tasks For: {day}</label>
+        <Container id='holderDiv' className='mw-100'>
+            <Container id="mainDiv" className='mw-100'>
+                <Container id="containerDiv">
+                    <Container id="dateSelectionDiv">
+                        <Container id="dateSelectionLabelDiv">
+                            <label id="dateSelectionLabel">Tasks For: {day}</label>
+                        </Container>
+                        {/* going over the documentation, placeholder and other html tags wont work with this, need another solution => fixed */}
+                        <Button variant='success' id='dateSelection' name='dateSelection' value={day} onClick={handleDateChange}>Select Date</Button>
+                        <Modal show={showDatePicker} onHide={handleClose}>
+                            <Modal.Header>
+                            <Modal.Title>Select a Date</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                            <input
+                                type="date"
+                                className="form-control"
+                                value={day}
+                                onChange={handleDateChange}
+                            />
+                            </Modal.Body>
+                            <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                            </Modal.Footer>
+                        </Modal>
+                        {/* <input type='date' id='dateSelection' name='dateSelection' value={day} onChange={handleDateChange}></input> */}
                     </Container>
-                    {/* going over the documentation, placeholder and other html tags wont work with this, need another solution => fixed */}
-                    <Button variant='success' id='dateSelection' name='dateSelection' value={day} onClick={handleDateChange}>Select Date</Button>
-                    <Modal show={showDatePicker} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                        <Modal.Title>Select a Date</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                        <input
-                            type="date"
-                            className="form-control"
-                            value={day}
-                            onChange={handleDateChange}
-                        />
-                        </Modal.Body>
-                        <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                        </Modal.Footer>
-                    </Modal>
-                    {/* <input type='date' id='dateSelection' name='dateSelection' value={day} onChange={handleDateChange}></input> */}
+                    <Container id='toDoListDiv'>
+                        <table id="toDoListTable">
+                            <tbody> 
+                                {listData.map((item, i) => (
+                                <tr key={i} id={i}>
+                                    <td>
+                                        <ToggleButton type="checkbox" className='mb-2' variant='outline-success' id={`checkButton${i}`} name="toggle-check" 
+                                        checked={
+                                            item.status === 'active' ? false : true
+                                        } 
+                                        value="1" onClick={handleRadioClick}>√</ToggleButton>
+                                    </td>
+                                    <td>{item.title}</td>
+                                    <td className={`ellipsis ${showDeleteButton ? 'hide' : ''}`} onClick={handleCellClick}>
+                                        {/* this here is the code to show the ellipsis and then the delete button */}
+                                        {showDeleteButton ? (<button onClick={handleDeleteClick}>Delete</button>) : ('⁝')}
+                                    </td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </Container>
+                    <Container id="buttonDiv">
+                        <button id="addButton" onClick={handleAddButtonClick}>Add New Task</button>
+                        {
+                            showDeleteButton && (
+                                <button id="deleteButton" onClick={() => setShowDeleteButton(false)} >Cancel Deletion</button>
+                            )
+                        }
+                    </Container>
                 </Container>
-                <Container id='toDoListDiv'>
-                    <table id="toDoListTable">
-                        <tbody> 
-                            {listData.map((item, i) => (
-                            <tr key={i} id={i}>
-                                <td>
-                                    <ToggleButton type="checkbox" className='mb-2' variant='outline-success' id={`checkButton${i}`} name="toggle-check" 
-                                    checked={
-                                        item.status === 'active' ? false : true
-                                    } 
-                                    value="1" onClick={handleRadioClick}>√</ToggleButton>
-                                </td>
-                                <td>{item.title}</td>
-                                <td className={`ellipsis ${showDeleteButton ? 'hide' : ''}`} onClick={handleCellClick}>
-                                    {/* this here is the code to show the ellipsis and then the delete button */}
-                                    {showDeleteButton ? (<button onClick={handleDeleteClick}>Delete</button>) : ('⁝')}
-                                </td>
-                            </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </Container>
-                <Container id="buttonDiv">
-                    <button id="addButton" onClick={handleAddButtonClick}>Add New Task</button>
-                    {
-                        showDeleteButton && (
-                            <button id="deleteButton" onClick={() => setShowDeleteButton(false)} >Cancel Deletion</button>
-                        )
-                    }
-                </Container>
+                {showForm && AddTaskForm(toDo, setShowForm, handleFormInputChange, handleKeyDown, onFormSubmit)}
             </Container>
-            {showForm && AddTaskForm(toDo, setShowForm, handleFormInputChange, handleKeyDown, onFormSubmit)}
-            {/* <Container id="logoutDiv">
-                <Button variant='danger' id='closeButton' onClick={() => window.location.href = '/'}>Log out</Button>
-            </Container> */}
         </Container>
     )
 }

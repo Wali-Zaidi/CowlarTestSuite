@@ -32,10 +32,11 @@ async function fetchListItemsService(day) {
     return response;
 }
 
-async function handleRadioClickService(title) {
+async function handleRadioClickService(title, day) {
     const response = await axios.put(`${portCall}/todo/list`, {
         "username": sessionStorage.getItem('username'),
         "title": title,
+        "completedTime": day,
         "status": "inactive",
     });
     if (response) {
@@ -48,10 +49,11 @@ async function handleRadioClickService(title) {
     return stringMessage;
 }
 
-async function handleRadioClickOtherService(title) {
+async function handleRadioClickOtherService(title, day) {
     const response = await axios.put(`${portCall}/todo/list`, {
         "username": sessionStorage.getItem('username'),
         "title": title,
+        "completedTime": day,
         "status": "active",
     });
     if (response) {
