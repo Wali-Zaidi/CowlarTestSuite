@@ -28,7 +28,7 @@ let addListItem = (req, res) => {
 let getAllListItems = (req, res) => {
     const { username, createdTime} = req.query;
   
-    ToDoListItem.find({ username, createdTime, status: "active"})
+    ToDoListItem.find({ username, createdTime})
       .then((items) => {
         console.log(items)
         res.status(200).json({ message: "Items retrieved successfully", items });

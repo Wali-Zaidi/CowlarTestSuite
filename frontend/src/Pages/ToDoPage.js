@@ -8,8 +8,9 @@ import '../CSS/View.css';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import AddTaskForm from '../Components/AddTaskForm';
-import { addListItem, fetchListItemsService } from '../Service/FrontendService';
+import { addListItem, fetchListItemsService, handleRadioClickService, handleRadioClickOtherService, handleDeleteClickService } from '../Service/FrontendService';
 import Modal from 'react-bootstrap/Modal';
+import { CloseButton, ToggleButton } from 'react-bootstrap';
 
 function ToDoPage() {
 
@@ -18,10 +19,10 @@ function ToDoPage() {
     const [day, setDay] = useState("");
     //to hold the list of items
     const [listData, setListData] = useState([]);
-    const [opacity, setOpacity] = useState(0.88); //to hold the opacity of the selected row
     const [showDeleteButton, setShowDeleteButton] = useState(false); //to hold the state of the delete button
     const [showForm, setShowForm] = useState(false); //to hold the state of the form
     const [showDatePicker, setShowDatePicker] = useState(false); //to hold the state of the date picker
+    const [checked, setChecked] = useState(false); //to hold the state of the radio button
 
     const toDoAdd = {
         username: sessionStorage.getItem('username'),
@@ -75,22 +76,20 @@ function ToDoPage() {
 
     const handleRadioClick = async(event) => {
         event.preventDefault();
-        let selectedRow = event.target; //do this in bits, as the DOM doesnt like it if you do it all at once
+        let selectedRow = event.target; //do this in bits, as the DOM doesnt like it if you do it all at once   
         selectedRow = selectedRow.parentNode;
         selectedRow = selectedRow.parentNode;
-        selectedRow.style.opacity = 0.3//this is to change the opacity of the selected row
-        selectedRow.disabled = true; //this is to disable the selected row
 
-        try {
-            const response = await axios.put(`${portCall}/todo/list`, {
-                "username": sessionStorage.getItem('username'),
-                "title": selectedRow.childNodes[1].textContent,
-                "status": "inactive",
-            });
-            showAlert(response.data.message);
+        const checkbox = selectedRow.querySelector(`#checkButton${selectedRow.rowIndex}`);
+
+        if (checkbox.checked === false) {
+            checkbox.checked = !checkbox.checked;
+            showAlert(await handleRadioClickService(selectedRow.childNodes[1].textContent));
+            
         }
-        catch (err) {
-            showAlert(err.response.data.message);
+        else {
+            checkbox.checked = !checkbox.checked;
+            showAlert (await handleRadioClickOtherService(selectedRow.childNodes[1].textContent));
         }
     }
 
@@ -104,15 +103,11 @@ function ToDoPage() {
         selectedRow = selectedRow.parentNode;
         selectedRow = selectedRow.parentNode;
         try {
-            const response = await axios.delete(`${portCall}/todo/list`, { params: {
-                "username": sessionStorage.getItem('username'),
-                "title": selectedRow.childNodes[1].textContent,
-            }}); //this deletion is happening on the backend, now we need to remove this item from the listData array
+            showAlert(await handleDeleteClickService(selectedRow.childNodes[1].textContent));
             setListData((prevListData) =>
                 prevListData.filter((item, index) => index !== selectedRow.rowIndex)
             );
             setShowDeleteButton(false); 
-            showAlert(response.data.message);
         }
         catch (err) {
             showAlert(err.response.data.message);
@@ -195,14 +190,18 @@ function ToDoPage() {
                     <table id="toDoListTable">
                         <tbody> 
                             {listData.map((item, i) => (
-                            <tr key={i} id={i} style={{opacity}}>
+                            <tr key={i} id={i}>
                                 <td>
-                                    <input type="checkbox" id="checkbox" name="checkbox" value="checkbox" onClick={handleRadioClick}></input>
+                                    <ToggleButton type="checkbox" className='mb-2' variant='outline-success' id={`checkButton${i}`} name="toggle-check" 
+                                    checked={
+                                        item.status === 'active' ? false : true
+                                    } 
+                                    value="1" onClick={handleRadioClick}>√</ToggleButton>
                                 </td>
                                 <td>{item.title}</td>
                                 <td className={`ellipsis ${showDeleteButton ? 'hide' : ''}`} onClick={handleCellClick}>
                                     {/* this here is the code to show the ellipsis and then the delete button */}
-                                    {showDeleteButton ? (<button onClick={handleDeleteClick}>Delete</button>) : (':::')}
+                                    {showDeleteButton ? (<button onClick={handleDeleteClick}>Delete</button>) : ('⁝')}
                                 </td>
                             </tr>
                             ))}
@@ -219,6 +218,9 @@ function ToDoPage() {
                 </Container>
             </Container>
             {showForm && AddTaskForm(toDo, setShowForm, handleFormInputChange, handleKeyDown, onFormSubmit)}
+            {/* <Container id="logoutDiv">
+                <Button variant='danger' id='closeButton' onClick={() => window.location.href = '/'}>Log out</Button>
+            </Container> */}
         </Container>
     )
 }

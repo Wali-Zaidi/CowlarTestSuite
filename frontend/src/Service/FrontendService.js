@@ -32,4 +32,52 @@ async function fetchListItemsService(day) {
     return response;
 }
 
-export { addListItem, sendLoginData, sendSignupData, fetchListItemsService };
+async function handleRadioClickService(title) {
+    const response = await axios.put(`${portCall}/todo/list`, {
+        "username": sessionStorage.getItem('username'),
+        "title": title,
+        "status": "inactive",
+    });
+    if (response) {
+        var stringMessage = "Item marked as complete!";    
+    }
+    else {
+        stringMessage = "Error marking item as complete!";
+    }
+
+    return stringMessage;
+}
+
+async function handleRadioClickOtherService(title) {
+    const response = await axios.put(`${portCall}/todo/list`, {
+        "username": sessionStorage.getItem('username'),
+        "title": title,
+        "status": "active",
+    });
+    if (response) {
+        var stringMessage = "Item marked as pending!";    
+    }
+    else {
+        stringMessage = "Error marking item as pending!";
+    }
+
+    return stringMessage;
+}
+
+async function handleDeleteClickService(title) {
+    const response = await axios.delete(`${portCall}/todo/list`, { params: {
+        "username": sessionStorage.getItem('username'),
+        "title": title,
+    }}); //this deletion is happening on the backend, now we need to remove this item from the listData array
+
+    if (response) {
+        var stringMessage = "Item deleted successfully!";    
+    }
+    else {
+        stringMessage = "Error deleting item!";
+    }
+
+    return stringMessage;
+}
+
+export { addListItem, sendLoginData, sendSignupData, fetchListItemsService, handleRadioClickService, handleRadioClickOtherService, handleDeleteClickService };
