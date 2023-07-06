@@ -7,13 +7,13 @@ async function addListItem (toDo) {
         const response = await axios.post(`${portCall}/todo/list`, toDo);
         var stringMessage = "Item added successfully!";
         console.log(stringMessage);
-        return(stringMessage);
     }
     catch (err) {
         stringMessage = err.response.data.message;
         console.log(stringMessage);
-        return(stringMessage);
     }
+    console.log(stringMessage);
+    return stringMessage;
 }
 
 async function sendLoginData() {
@@ -24,4 +24,12 @@ async function sendSignupData() {
 
 }
 
-export { addListItem, sendLoginData, sendSignupData };
+async function fetchListItemsService(day) {
+    const response = await axios.get(`${portCall}/todo/list`, {params: {
+            "username": sessionStorage.getItem('username'),
+            "createdTime": day
+    }});
+    return response;
+}
+
+export { addListItem, sendLoginData, sendSignupData, fetchListItemsService };

@@ -8,7 +8,7 @@ import '../CSS/View.css';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import AddTaskForm from '../Components/AddTaskForm';
-import { addListItem } from '../Service/FrontendService';
+import { addListItem, fetchListItemsService } from '../Service/FrontendService';
 import Modal from 'react-bootstrap/Modal';
 
 function ToDoPage() {
@@ -62,10 +62,7 @@ function ToDoPage() {
     const fetchListItems = async () => { //this also fetches our table items when date is selected
         let tempList = [];
         try {
-            const response = await axios.get(`${portCall}/todo/list`, {params: {
-                "username": sessionStorage.getItem('username'),
-                "createdTime": day
-            }});
+            const response = await fetchListItemsService(day);
             tempList = response.data.items; //this is to get the items array from the response
             for (let i = 0; i < tempList.length; i++) {
                 tempList[i].id = i; //this is to add an id to each item in the array, so that we can use it in the table
@@ -132,10 +129,11 @@ function ToDoPage() {
         event.preventDefault();
         toDo.createdTime = day;
         console.log(toDo);
-        showAlert(addListItem(toDo));
+        showAlert(await addListItem(toDo));
+        await fetchListItems();
         setShowForm(false);
-        fetchListItems();
     }
+
 
     const handleKeyDown = (event) => {
         if (event.keyCode === 13) {
