@@ -56,7 +56,7 @@ function ToDoPage() {
         }
     }, [day]);  //first useeffect to handle the date updation
 
-    const handleClose = () => setShowDatePicker(false);
+    const handleClose = () => setShowDatePicker(false); //used to handle the closing of the date picker
 
     //to handle the date change
     const fetchListItems = async () => { //this also fetches our table items when date is selected
@@ -64,7 +64,7 @@ function ToDoPage() {
         try {
             const response = await axios.get(`${portCall}/todo/list`, {params: {
                 "username": sessionStorage.getItem('username'),
-                "completedTime": day
+                "createdTime": day
             }});
             tempList = response.data.items; //this is to get the items array from the response
             for (let i = 0; i < tempList.length; i++) {
@@ -131,7 +131,10 @@ function ToDoPage() {
     const onFormSubmit = async(event) => {
         event.preventDefault();
         toDo.createdTime = day;
-        addListItem(toDo, setShowForm, setDay, fetchListItems);
+        console.log(toDo);
+        showAlert(addListItem(toDo));
+        setShowForm(false);
+        fetchListItems();
     }
 
     const handleKeyDown = (event) => {

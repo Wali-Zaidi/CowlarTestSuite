@@ -17,7 +17,6 @@ const toDoListSchema = new mongoose.Schema({
     },
     completedTime: {
         type: String,
-        required: true
          //this will automatically set the time to the current time
     },
     createdTime: {
