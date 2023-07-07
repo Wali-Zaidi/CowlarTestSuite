@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { portCall } from '../Components/config';
-
+import { portCall } from '../Config/config';
 
 async function addListItem (toDo) {
     try { 
@@ -17,7 +16,13 @@ async function addListItem (toDo) {
 }
 
 async function sendLoginData() {
-
+    try {
+        const response = await axois.post(`${portCall}/user/login`, user);
+        return "Login successful!"
+    }
+    catch (err) {
+        return "Error occured while trying to login!"
+    }
 }
 
 async function sendSignupData() {
@@ -36,7 +41,7 @@ async function handleRadioClickService(title, day) {
     const response = await axios.put(`${portCall}/todo/list`, {
         "username": sessionStorage.getItem('username'),
         "title": title,
-        "completedTime": day,
+        "createdTime": day,
         "status": "inactive",
     });
     if (response) {

@@ -24,7 +24,7 @@
 }
 
 #mainDiv {
-    background-image: url("../Components/Images/Background.jpg");
+    background-image: url("../Assets/Background.jpg");
     height: 100vh;
     width: 100%;
     background-repeat: no-repeat;

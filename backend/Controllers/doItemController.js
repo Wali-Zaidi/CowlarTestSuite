@@ -45,10 +45,10 @@ let getAllListItems = (req, res) => {
 //third, updating a list item
 
 let updateListItem = (req, res) => {
-    const { username, title, status, completedTime } = req.body;
+    const { username, title, status, createdTime } = req.body;
     console.log(req.body);
 
-    ToDoListItem.findOneAndUpdate({username, title, completedTime}, {
+    ToDoListItem.findOneAndUpdate({username, title, createdTime}, {
         status: req.body.status,
     }, {new: true}).then((result) => {
         console.log(result);

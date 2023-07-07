@@ -6,6 +6,7 @@ import Loader from '../Components/Loader';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { sendLoginData } from '../Service/FrontendService';
 
 function LandingPage() {
 
@@ -31,17 +32,9 @@ function LandingPage() {
         event.preventDefault();
         setLoading(true);
         if (event.target.value === "Login") {
-            try {
-                const response = await axois.post(`${portCall}/user/login`, user);
-                console.log(response.data);   
-                showAlert(response.data.message)
-                sessionStorage.setItem('username', user.username);
-                window.location.href = '/list';
-            }
-            catch (err) {
-                console.log(err);
-                showAlert(err.response.data.message);
-            }
+            showAlert(await sendLoginData(user));
+            sessionStorage.setItem('username', user.username);
+            window.location.href = '/list';
         }
         else if (event.target.value === "Register") {
             try { 

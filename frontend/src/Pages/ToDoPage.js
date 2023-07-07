@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import {useState} from 'react';
 import axios from 'axios';
-import {portCall, token} from '../Components/config';
+import {portCall, token} from '../Config/config';
 import '../CSS/View.css';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -85,10 +85,12 @@ function ToDoPage() {
         if (checkbox.checked === false) {
             checkbox.checked = !checkbox.checked;
             showAlert(await handleRadioClickService(selectedRow.childNodes[1].textContent, day));
+            fetchListItems();
         }
         else {
             checkbox.checked = !checkbox.checked;
             showAlert (await handleRadioClickOtherService(selectedRow.childNodes[1].textContent, day));
+            fetchListItems();
         }
     }
 
