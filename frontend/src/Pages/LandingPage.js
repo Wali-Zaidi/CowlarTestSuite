@@ -1,12 +1,11 @@
 import React from 'react';
 import axois from 'axios';
-import {portCall} from '../Components/config';
 import '../CSS/View.css';
 import Loader from '../Components/Loader';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { sendLoginData } from '../Service/FrontendService';
+import { sendLoginData, sendSignupData } from '../Service/FrontendService';
 
 function LandingPage() {
 
@@ -37,15 +36,7 @@ function LandingPage() {
             window.location.href = '/list';
         }
         else if (event.target.value === "Register") {
-            try { 
-                const response = await axois.post(`${portCall}/user/signup`, user);
-                console.log(response.data);
-                showAlert(response.data.message)
-            }
-            catch (err) {
-                console.log(err);
-                showAlert(err.response.data.message);
-            }
+            showAlert(await sendSignupData(user));
         }
         setLoading(false);
     }

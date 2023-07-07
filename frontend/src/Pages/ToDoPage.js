@@ -70,7 +70,7 @@ function ToDoPage() {
             }
             setListData(tempList);
         } catch (err) {
-          showAlert(err.response.data.message);
+          showAlert(err);
         }
     };
 

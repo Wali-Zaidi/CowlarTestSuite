@@ -44,20 +44,21 @@ let getAllListItems = (req, res) => {
     
 //third, updating a list item
 
-let updateListItem = (req, res) => {
-    const { username, title, status, createdTime } = req.body;
-    console.log(req.body);
+let updateListItem = async(req, res) => {
+    const { username, title, createdTime, status } = req.body;
 
-    ToDoListItem.findOneAndUpdate({username, title, createdTime}, {
-        status: req.body.status,
-    }, {new: true}).then((result) => {
-        console.log(result);
-        res.status(200).json({message: "Item updated successfully", result: result});
-        console.log("Item updated successfully");
-    }).catch((err) => {
-        res.status(500).json({message: "Error updating item", error: err})
-        console.log("Error updating item");
-    });
+    const response = await ToDoListItem.findOne({ username, title, createdTime });
+
+    if (!response) {
+        res.status(404).json({ message: "Item not found" });
+        console.log("Item not found");
+        return;
+    }
+
+    response.status = status;
+    const result = await response.save();
+    res.status(200).json({ message: "Item updated successfully", result });
+
 }
 
 //and finally, deleting a list item

@@ -15,9 +15,9 @@ async function addListItem (toDo) {
     return stringMessage;
 }
 
-async function sendLoginData() {
+async function sendLoginData(user) {
     try {
-        const response = await axois.post(`${portCall}/user/login`, user);
+        const response = await axios.post(`${portCall}/user/login`, user);
         return "Login successful!"
     }
     catch (err) {
@@ -25,8 +25,14 @@ async function sendLoginData() {
     }
 }
 
-async function sendSignupData() {
-
+async function sendSignupData(user) {
+    const response = await axios.post(`${portCall}/user/signup`, user);
+    if (response) {
+        return "Signup successful!"
+    }
+    else {
+        return "Error occured while trying to signup!"
+    }
 }
 
 async function fetchListItemsService(day) {
@@ -38,6 +44,7 @@ async function fetchListItemsService(day) {
 }
 
 async function handleRadioClickService(title, day) {
+
     const response = await axios.put(`${portCall}/todo/list`, {
         "username": sessionStorage.getItem('username'),
         "title": title,
@@ -58,7 +65,7 @@ async function handleRadioClickOtherService(title, day) {
     const response = await axios.put(`${portCall}/todo/list`, {
         "username": sessionStorage.getItem('username'),
         "title": title,
-        "completedTime": day,
+        "createdTime": day,
         "status": "active",
     });
     if (response) {
