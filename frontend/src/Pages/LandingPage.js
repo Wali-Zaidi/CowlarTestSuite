@@ -27,32 +27,43 @@ function LandingPage() {
     }
 
     const handleSubmit = async(event) => {
-
         event.preventDefault();
-        setLoading(true);
-        if (event.target.value === "Login") {
-            showAlert(await sendLoginData(user));
-            sessionStorage.setItem('username', user.username);
-            window.location.href = '/list';
+        if (user.username === "" || user.password === "") {
+            showAlert("Please enter a username and password!");
+            return;
         }
-        else if (event.target.value === "Register") {
-            showAlert(await sendSignupData(user));
+        else {
+            setLoading(true);
+            if (event.target.value === "Login") {
+                // const reply = await sendLoginData(user);
+                if (showAlert(await sendLoginData(user)) === "Login successful!") {
+                    sessionStorage.setItem('username', user.username);
+                    window.location.href = '/list';
+                }
+                else {
+                    showAlert("Login unsuccessful, please check credentials again!");
+                }
+            }
+            else if (event.target.value === "Register") {
+                showAlert(await sendSignupData(user));
+            }
+            setLoading(false);
         }
-        setLoading(false);
     }
     
     const showAlert = (message) => {
         const alertElement = document.createElement('Container');
         alertElement.classList.add('alert');
         alertElement.textContent = message; 
-        document.getElementById('mainDiv').appendChild(alertElement);
+        document.getElementById('mainDivLogin').appendChild(alertElement);
         setTimeout(function() {
             alertElement.remove();
         }, 4000);
+        return message
     }
 
     return( //mostly a rough draft, styling will come later on => resolved
-        <Container id='mainDiv' className='mw-100 container-fluid'>
+        <Container id='mainDivLogin' className='mw-100 container-fluid'>
             <Container id='loginDiv' className='container-sm mw-30'>
                 <Container id='loginForm' className='mw-20 container-sm'>
                     <Form onSubmit={handleSubmit}>

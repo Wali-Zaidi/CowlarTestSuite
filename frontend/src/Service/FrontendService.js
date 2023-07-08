@@ -5,23 +5,37 @@ async function addListItem (toDo) {
     try { 
         const response = await axios.post(`${portCall}/todo/list`, toDo);
         var stringMessage = "Item added successfully!";
-        console.log(stringMessage);
     }
     catch (err) {
         stringMessage = err.response.data.message;
-        console.log(stringMessage);
     }
-    console.log(stringMessage);
     return stringMessage;
 }
 
 async function sendLoginData(user) {
+    let string = "";
     try {
         const response = await axios.post(`${portCall}/user/login`, user);
-        return "Login successful!"
+        if (response.status == 200) {
+            string = "Login successful!";
+            return string;
+        }
+        else if (response.status == 400) {
+            string = "Password is incorrect!";
+            return string;
+        }
     }
     catch (err) {
-        return "Error occured while trying to login!"
+        if (err.message) {
+            if (err.message === "Network Error") {
+                string = "Error: Could not connect to the server, please try again later!";
+                return string;
+            }
+        }
+        else {
+            string = err.response.data.message;
+            return string;
+        }
     }
 }
 
