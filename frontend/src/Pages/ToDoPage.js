@@ -20,7 +20,6 @@ function ToDoPage() {
     const [showDeleteButton, setShowDeleteButton] = useState(false); //to hold the state of the delete button
     const [showForm, setShowForm] = useState(false); //to hold the state of the form
     const [showDatePicker, setShowDatePicker] = useState(false); //to hold the state of the date picker
-    const [checked, setChecked] = useState(false); //to hold the state of the radio button
 
     const toDoAdd = {
         username: sessionStorage.getItem('username'),
@@ -63,7 +62,6 @@ function ToDoPage() {
         try {
             const response = await fetchListItemsService(day);
             tempList = response.data.items; //this is to get the items array from the response
-            console.log(tempList);
             for (let i = 0; i < tempList.length; i++) {
                 tempList[i].id = i; //this is to add an id to each item in the array, so that we can use it in the table
             }
@@ -123,7 +121,6 @@ function ToDoPage() {
     const onFormSubmit = async(event) => {
         event.preventDefault();
         toDo.createdTime = day;
-        console.log(toDo);
         showAlert(await addListItem(toDo));
         await fetchListItems();
         setShowForm(false);

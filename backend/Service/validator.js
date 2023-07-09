@@ -1,14 +1,14 @@
 
 const validateUserCreation = (user) => { 
 
-    let errors = {};
+    let errors = [];
 
     if (!user.username.trim()) {
-        errors.username = "Username is required";
+        errors.push( "Username is required");
     }
 
     if (!user.password.trim()) {
-        errors.password = "Password is required";
+        errors.push("Password is required");
     }
 
     return errors;

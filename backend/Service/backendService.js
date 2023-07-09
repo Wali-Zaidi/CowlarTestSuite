@@ -14,7 +14,7 @@ let addListItemService = async(req) => {
 
     const errors = validator.validateItemCreation(item);
 
-    if (errors.length >= 0) {
+    if (errors.length > 0) {
         throw errors;
     }
     else {
@@ -42,7 +42,6 @@ let updateListItemService = async(req) => {
     const response = await ToDoListItem.findOne({ username, title, createdTime });
 
     if (!response) {
-        console.log("Item not found");
         return message = "Item not found";
     }
 

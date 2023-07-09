@@ -2,8 +2,10 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const dotenv = require('dotenv')
-const userRoute = require('./Routes/userRoute')
-const doItemRoute = require('./Routes/doItemRoute')
+// const userRoute = require('./Routes/userRoute')
+// const doItemRoute = require('./Routes/doItemRoute')
+const appConnect = require('./Connections/routerConnection')
+const connectToDatabase = require('./Connections/dbConnection')
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,16 +13,14 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-app.use('/user', userRoute);
-app.use('/todo', doItemRoute);
+appConnect(app);
+
+// app.use('/user', userRoute);
+// app.use('/todo', doItemRoute);
 
 dotenv.config();
 
-mongoose.connect(process.env.DATABASE_ACCESS, {useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
-    console.log("Database connection successful")
-}).catch((err) => {
-    console.log("Error occurred while connecting to the databse", err)
-})
+connectToDatabase();
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`)

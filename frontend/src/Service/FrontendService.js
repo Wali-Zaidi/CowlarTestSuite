@@ -3,7 +3,7 @@ import { portCall } from '../Config/config';
 
 async function addListItem (toDo) {
     try { 
-        const response = await axios.post(`${portCall}/todo/list`, toDo);
+        await axios.post(`${portCall}/todo/list`, toDo);
         var stringMessage = "Item added successfully!";
     }
     catch (err) {
@@ -16,11 +16,11 @@ async function sendLoginData(user) {
     let string = "";
     try {
         const response = await axios.post(`${portCall}/user/login`, user);
-        if (response.status == 200) {
+        if (response.status === 200) {
             string = "Login successful!";
             return string;
         }
-        else if (response.status == 400) {
+        else if (response.status === 400) {
             string = "Password is incorrect!";
             return string;
         }
@@ -54,7 +54,6 @@ async function fetchListItemsService(day) {
             "username": sessionStorage.getItem('username'),
             "createdTime": day
     }});
-    console.log(response);
     return response;
 }
 
