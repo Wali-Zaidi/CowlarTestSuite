@@ -2,8 +2,6 @@
 //done that, now to remember to keep this in mind
 import React, { useEffect } from 'react';
 import {useState} from 'react';
-import axios from 'axios';
-import {portCall, token} from '../Config/config';
 import '../CSS/View.css';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -65,6 +63,7 @@ function ToDoPage() {
         try {
             const response = await fetchListItemsService(day);
             tempList = response.data.items; //this is to get the items array from the response
+            console.log(tempList);
             for (let i = 0; i < tempList.length; i++) {
                 tempList[i].id = i; //this is to add an id to each item in the array, so that we can use it in the table
             }

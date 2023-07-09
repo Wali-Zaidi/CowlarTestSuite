@@ -54,6 +54,7 @@ async function fetchListItemsService(day) {
             "username": sessionStorage.getItem('username'),
             "createdTime": day
     }});
+    console.log(response);
     return response;
 }
 
