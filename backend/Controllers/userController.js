@@ -28,7 +28,6 @@ let signup = (req, res) => {
 
 let login = (req, res) => {
     let checkName = req.body.username
-    let checkEmail = req.body.email
     let checkPassword = req.body.password
     let secretKey = process.env.SECRET_KEY //make sure to store this in the .env file too
 
@@ -43,7 +42,7 @@ let login = (req, res) => {
             }
         }
     }).catch((err) => {
-        res.status(404).send({message: "An error occurred during login", error: err.message})
+        res.status(404).send({message: "An error occurred during login"})
     })
 }
 

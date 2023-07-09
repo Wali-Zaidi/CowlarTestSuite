@@ -1,7 +1,7 @@
 //add task form dependant on setting the date, while the add task form takes time selection as input
         /basically, its confusion regarding the purpose of the two selections of date, improve the UI to eliminate this problem
 
-//use a css framework to make the UI look better --> in progress
+//use a css framework to make the UI look better --> *COMPLETE*
 
 //add in a loader for when api calls are in progress --> *COMPLETE*
 

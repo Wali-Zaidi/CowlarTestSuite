@@ -1,4 +1,5 @@
 const ToDoListItem = require("../Models/doItemModel");
+const User = require("../Models/userModel");
 const validator = require("../Service/validator");
 
 let addListItemService = async(req) => {
@@ -62,7 +63,47 @@ let deleteListItemService = async(req, res) => {
     });
 }
 
+let signupService = async(req, res) => {
+    await User.findOne({username: req.body.username}).then((existingUser) => { //the find one function is easy enough, just make sure that the first part of the condition matches exactly with the model username
+        if (existingUser) {
+            res.status(500).send("Username already exists");
+        }
+        else {
+            let user = new User({
+                username: req.body.username,
+                password: req.body.password
+            });
+        
+            user.save().then((result) => {
+                res.status(200).send(result);
+            }).catch((err) => {
+                res.status(400).send(err.message);
+            });
+        }
+    }).catch((err) => {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    });
+}
 
+let loginService = async(req, res) => { 
+    let checkName = req.body.username
+    let checkPassword = req.body.password
+    let secretKey = process.env.SECRET_KEY //make sure to store this in the .env file too
 
+    await User.findOne({username: checkName}).then((user) => {
+        if (user) {
+            if (user.password == checkPassword) {
+                let token = jwt.sign({username: checkName}, secretKey, {expiresIn: '1h'})
+                res.status(200).send({message: "Login Successful", token: token}) //token passed via json reply, and in the message too, under token heading
+            }
+            else {
+                res.status(400).send({message: "Password is incorrect"})
+            }
+        }
+    }).catch((err) => {
+        res.status(404).send({message: "An error occurred during login", error: err.message})
+    })
+}
 
-module.exports = { addListItemService, getAllListItemService, updateListItemService, deleteListItemService };
+module.exports = { addListItemService, getAllListItemService, updateListItemService, deleteListItemService, signupService, loginService};

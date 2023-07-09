@@ -24,6 +24,10 @@ async function sendLoginData(user) {
             string = "Password is incorrect!";
             return string;
         }
+        else {
+            string = "Error: Could not login, please try again later!";
+            return string;
+        }
     }
     catch (err) {
         if (err.message) {
@@ -40,12 +44,29 @@ async function sendLoginData(user) {
 }
 
 async function sendSignupData(user) {
-    const response = await axios.post(`${portCall}/user/signup`, user);
-    if (response) {
-        return "Signup successful!"
+    let string = "";
+    try {
+        const response = await axios.post(`${portCall}/user/signup`, user);
+        if (response.status === 200) {
+            string = "Signup successful!";
+            return string;
+        }
+        else if (response.status === 400) {
+            string = "Error: Could not create user, please try again later!";
+            return string;
+        }
     }
-    else {
-        return "Error occured while trying to signup!"
+    catch (err) { //this error is coming from the backend, so it will be a 400 error
+        if (err.message) {
+            if (err.message === "Network Error") {
+                string = "Error: Could not connect to the server, please try again later!";
+                return string;
+            }
+        }
+        else {
+            string = err.response.data.message;
+            return string;
+        }
     }
 }
 

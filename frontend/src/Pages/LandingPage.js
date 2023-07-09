@@ -1,5 +1,5 @@
 import React from 'react';
-// import '../CSS/View.css';
+import '../CSS/View.css';
 import Loader from '../Components/Loader';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -35,12 +35,20 @@ function LandingPage() {
             setLoading(true);
             if (event.target.value === "Login") {
                 // const reply = await sendLoginData(user);
-                if (showAlert(await sendLoginData(user)) === "Login successful!") {
+                let string = await sendLoginData(user);
+                console.log(string);
+                // showAlert(await sendLoginData(user))
+                if (string === "Login successful!") {
+                    showAlert("Login successful!");
                     sessionStorage.setItem('username', user.username);
                     window.location.href = '/list';
                 }
-                else {
+                else if (string === "Password is incorrect!") {
                     showAlert("Login unsuccessful, please check credentials again!");
+                }
+                else {
+                    showAlert("Error: Could not login, please try again later!");
+                    setLoading(false);
                 }
             }
             else if (event.target.value === "Register") {

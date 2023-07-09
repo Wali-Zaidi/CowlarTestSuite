@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 let connectToDatabase = async() => {
 
     try {
@@ -7,6 +8,7 @@ let connectToDatabase = async() => {
         console.log("Connected to database");
     }
     catch (err) {
+        console.log(err.message);
         console.log("Error connecting to database");
     }
 }
