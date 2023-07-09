@@ -31,6 +31,7 @@ Backend:
         
 This will, again, install all the dependancies that you might need to run the backend.
 This installation will finish considerably faster than the frontend one.
+Then, go to the .env file in the backend, and follow the instructions there on variable names, substituting your own database connection string and secret key as required.
         
 ## Usage
 
