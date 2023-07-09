@@ -154,7 +154,7 @@ function ToDoPage() {
     }
 
     return (
-        <Container id='holderDiv' className='mw-100'>
+        <Container id='holderDiv' data-testid='todoPage' className='mw-100'>
             <CloseButton id="logoutButton" className='normalButton' onClick={() => window.location.href = '/'}></CloseButton>
             <Container id="mainDiv" className='mw-100'>
                 <Container id="containerDiv">

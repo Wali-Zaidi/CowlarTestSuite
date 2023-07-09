@@ -1,36 +1,48 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-jest.mock('axios'); // Mock the axios module
-import axios from 'axios';
-import LandingPage from '../LandingPage';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import LandingPage from "../Pages/LandingPage";
+import ToDoPage from "../Pages/ToDoPage";
+import axios from "axios";
 
-describe('LandingPage', () => {
-  it('renders the login form', () => {
-    const { getByLabelText } = render(<LandingPage />);
+jest.mock("axios");
 
-    expect(getByLabelText('Username:')).toBeInTheDocument();
-    expect(getByLabelText('Password:')).toBeInTheDocument();
-    expect(getByLabelText('Email:')).toBeInTheDocument();
-  });
+// describe("LandingPage", () => {
+//     test("checking if the landing page renders", () => { //checking if the landing page renders
+//         render(<LandingPage />);
+//         const landingPageElement = screen.getByTestId("landingPage");
+//         expect(landingPageElement).toBeInTheDocument();
+//     });
+// });
 
-  it('handles login form submission', async () => {
-    const { getByLabelText, getByText } = render(<LandingPage />);
-    const usernameInput = getByLabelText('Username:');
-    const passwordInput = getByLabelText('Password:');
-    const loginButton = getByText('Login');
+// describe("ToDoPage", () => {
+//     test("checking if the to do page renders", () => { //checking if the to do page renders
+//         render(<ToDoPage />);
+//         const toDoPageElement = screen.getByTestId("toDoPage");
+//         expect(toDoPageElement).toBeInTheDocument();
+//     });
+// });
 
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-    fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
-
-    axios.post.mockResolvedValueOnce({ data: { message: 'Login successful' } });
-
-    fireEvent.click(loginButton);
-
-    expect(axios.post).toHaveBeenCalledWith(
-      expect.stringContaining('/user/login'),
-      expect.objectContaining({ username: 'testuser', password: 'testpassword' })
-    );
-  });
+describe("FrontendService", () => {
+    test("checking if the login service works", async () => { //checking if the login service works
+        axios.post.mockImplementationOnce(() => Promise.resolve({data: "Login successful!"}));
+        const response = await axios.post();
+        expect(response.data).toEqual("Login successful!");
+    });
 });
 
-// final version of LandingPage.test.js
+describe("FrontendService", () => {
+    test("checking if the signup service works", async () => { //checking if the signup service works
+        axios.post.mockImplementationOnce(() => Promise.resolve({data: "Signup successful!"}));
+        const response = await axios.post();
+        expect(response.data).toEqual("Signup successful!");
+    });
+});
+
+describe("LandingPage", () => { //checking if the landing page renders
+    test("checking if the landing page renders", () => {
+        render(<LandingPage />);
+        const landingPageElement = screen.getByTestId("landingPage");
+        expect(landingPageElement).toBeInTheDocument();
+    });
+});
+

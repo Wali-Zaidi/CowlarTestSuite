@@ -1,6 +1,5 @@
 import React from 'react';
-import axois from 'axios';
-import '../CSS/View.css';
+// import '../CSS/View.css';
 import Loader from '../Components/Loader';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -63,7 +62,7 @@ function LandingPage() {
     }
 
     return( //mostly a rough draft, styling will come later on => resolved
-        <Container id='mainDivLogin' className='mw-100 container-fluid'>
+        <Container id='mainDivLogin' data-testid="landingPage" className='mw-100 container-fluid'>
             <Container id='loginDiv' className='container-sm mw-30'>
                 <Container id='loginForm' className='mw-20 container-sm'>
                     <Form onSubmit={handleSubmit}>
